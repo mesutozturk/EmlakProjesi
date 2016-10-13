@@ -31,8 +31,19 @@ namespace Emlak.Entity.Entities
         public bool YayindaMi { get; set; } = false;
         public DateTime? OnaylanmaTarihi { get; set; }
         public string KullaniciID { get; set; }
+        public int KatturID { get; set; }
+        public int IsitmaSistemiID { get; set; }
+        public int IlanTuruID { get; set; }
+
 
         [ForeignKey("KullaniciID")]
         public virtual ApplicationUser Sahibi { get; set; }
+        [ForeignKey("KatturID")]
+        public virtual Kattur Katturu { get; set; }
+        [ForeignKey("IsitmaSistemiID")]
+        public virtual IsitmaSistemi IsitmaSistemi { get; set; }
+        [ForeignKey("IlanTuruID")]
+        public virtual IlanTuru IlanTuru { get; set; }
+        public virtual List<Fotograf> Fotograflar { get; set; } = new List<Fotograf>();
     }
 }

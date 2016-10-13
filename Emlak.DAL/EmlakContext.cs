@@ -17,5 +17,9 @@ namespace Emlak.DAL
         {
         }
         public virtual DbSet<Konut> Konutlar{ get; set; }
+        public virtual DbSet<Fotograf> Fotograflar{ get; set; }
+        public virtual DbSet<IlanTuru> IlanTurleri{ get; set; }
+        public virtual DbSet<IsitmaSistemi> IsitmaSistemleri { get; set; }
+        public virtual DbSet<Kattur> KatTurleri { get; set; }
     }
 }

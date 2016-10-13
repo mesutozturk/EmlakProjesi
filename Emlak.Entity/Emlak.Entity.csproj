@@ -85,6 +85,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Fotograf.cs" />
+    <Compile Include="Entities\IlanTuru.cs" />
+    <Compile Include="Entities\IsitmaSistemi.cs" />
+    <Compile Include="Entities\Kattur.cs" />
     <Compile Include="Entities\Konut.cs" />
     <Compile Include="IdentityModels\ApplicationRole.cs" />
     <Compile Include="IdentityModels\ApplicationUser.cs" />
