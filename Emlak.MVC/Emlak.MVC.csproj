@@ -162,6 +162,16 @@
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Emlak.BLL\Emlak.BLL.csproj">
+      <Project>{528e2fc2-6589-4ed8-9346-cc988d29d87b}</Project>
+      <Name>Emlak.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Emlak.Entity\Emlak.Entity.csproj">
+      <Project>{4ef0c6a4-1ae3-4215-9b5b-8d982d2ffdec}</Project>
+      <Name>Emlak.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

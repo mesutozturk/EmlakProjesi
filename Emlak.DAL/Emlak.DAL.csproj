@@ -85,11 +85,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EmlakContext.cs" />
+    <Compile Include="Migrations\201610130908138_firstmigration.cs" />
+    <Compile Include="Migrations\201610130908138_firstmigration.Designer.cs">
+      <DependentUpon>201610130908138_firstmigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Emlak.Entity\Emlak.Entity.csproj">
+      <Project>{4ef0c6a4-1ae3-4215-9b5b-8d982d2ffdec}</Project>
+      <Name>Emlak.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201610130908138_firstmigration.resx">
+      <DependentUpon>201610130908138_firstmigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
