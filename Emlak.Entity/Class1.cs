@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Emlak.DAL
+namespace Emlak.Entity
 {
     public class Class1
     {
