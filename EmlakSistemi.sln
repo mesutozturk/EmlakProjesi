@@ -11,6 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emlak.BLL", "Emlak.BLL\Emla
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emlak.MVC", "Emlak.MVC\Emlak.MVC.csproj", "{79A52669-8003-41CE-A60C-42A3CE3576AB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5E692234-AD09-4E14-A0D0-59AFC2787C5A}"
+	ProjectSection(SolutionItems) = preProject
+		kurulacak.txt = kurulacak.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

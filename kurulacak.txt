@@ -1,0 +1,12 @@
+--hepsine--
+Entityframework
+Microsoft.aspnet.Identity.core
+Microsoft.aspnet.Identity.EntityFramework
+Newtonsoft.Json
+Microsoft.aspnet.Identity.Owin
+--sadece UI--
+Microsoft.Owin
+Microsoft.Owin.Security
+Microsoft.Owin.Security.Cookies
+Microsoft.Owin.Security.OAuth
+Microsoft.Owin.Host.SystemWeb
