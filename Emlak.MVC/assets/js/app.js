@@ -1481,7 +1481,7 @@ webpackJsonpapp([0],[
 	      $('<link>')
 	        .appendTo('head')
 	        .attr({type: 'text/css', rel: 'stylesheet'})
-	        .attr('href', 'assets/css/ui-panel.css');
+	        .attr('href', '../assets/css/ui-panel.css');
 
 	      var htmlBlock = '<div class="ui-panel js-ui-panel">' +
 	        '<button class="ui-panel__toggle js-ui-panel-toggle"></button>' +

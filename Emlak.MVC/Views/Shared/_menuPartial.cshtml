@@ -90,7 +90,7 @@
                 </li>
                 <li class="navbar__item js-dropdown">
                     <a class="navbar__link">
-                        Agents
+                        Hesap
                         <svg class="navbar__arrow">
                             <use xlink:href="#icon-arrow-right"></use>
                         </svg>
@@ -103,10 +103,38 @@
                         </button>
                         <div class="navbar__submenu">
                             <ul class="navbar__subnav">
-                                <li class="navbar__subitem"><a href="agents_listing_grid.html" class="navbar__sublink js-navbar-sublink">Agent grid</a></li>
-                                <li class="navbar__subitem"><a href="agents_listing.html" class="navbar__sublink js-navbar-sublink">Agent list</a></li>
-                                <li class="navbar__subitem"><a href="agent_listing.html" class="navbar__sublink js-navbar-sublink">Agent's properties</a></li>
-                                <li class="navbar__subitem"><a href="agent_listing_sidebar.html" class="navbar__sublink js-navbar-sublink">Sidebar agent's properties</a></li>
+                                @if (HttpContext.Current.User.Identity.IsAuthenticated)
+                                {
+                                    <li class="navbar__subitem">
+                                        <a href="@Url.Action("Profile","Account")" class="navbar__sublink js-navbar-sublink">
+                                           @HttpContext.Current.User.Identity.GetUserName() Profili
+                                        </a>
+                                    </li>
+                                    <li class="navbar__subitem">
+                                        <a href="@Url.Action("Logout","Account")" class="navbar__sublink js-navbar-sublink">
+                                            Çıkış Yap
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="navbar__subitem">
+                                        <a href="@Url.Action("Login","Account")" class="navbar__sublink js-navbar-sublink">
+                                            Giriş Yap
+                                        </a>
+                                    </li>
+                                    <li class="navbar__subitem">
+                                        <a href="@Url.Action("Register","Account")" class="navbar__sublink js-navbar-sublink">
+                                            Kayıt Ol
+                                        </a>
+                                    </li>
+                                    <li class="navbar__subitem">
+                                        <a href="@Url.Action("RecoverPassword","Account")" class="navbar__sublink js-navbar-sublink">
+                                            Şifremi Unuttum
+                                        </a>
+                                    </li>
+                                }
+                                
                             </ul>
                         </div>
                     </div>

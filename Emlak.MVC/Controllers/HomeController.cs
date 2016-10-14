@@ -14,9 +14,20 @@ namespace Emlak.MVC.Controllers
             return View();
         }
 
+        #region PartialViewResults
         public PartialViewResult MenuPartial()
         {
             return PartialView("_menuPartial");
         }
+
+        public PartialViewResult BreadCrumbsPartial()
+        {
+            return PartialView("_breadcrubsPartial");
+        } 
+        public PartialViewResult FooterPartial()
+        {
+            return PartialView("_footerPartial");
+        }
+        #endregion
     }
 }

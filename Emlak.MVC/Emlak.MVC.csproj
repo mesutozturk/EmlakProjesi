@@ -497,6 +497,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -524,6 +525,11 @@
     <Content Include="assets\fonts\slick\slick.ttf" />
     <Content Include="assets\fonts\slick\slick.woff" />
     <Content Include="Views\Shared\_menuPartial.cshtml" />
+    <Content Include="Views\Shared\_mainLayout.cshtml" />
+    <Content Include="Views\Shared\_breadcrubsPartial.cshtml" />
+    <Content Include="Views\Shared\_footerPartial.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
