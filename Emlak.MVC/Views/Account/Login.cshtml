@@ -1,4 +1,4 @@
-﻿@model LoginViewModel
+﻿@model LoginAndRegisterViewModel
 @{
     ViewBag.Title = "Kullanıcı Girişi";
     Layout = "~/Views/Shared/_mainLayout.cshtml";
@@ -18,24 +18,25 @@
                 {
                     @Html.AntiForgeryToken()
                     <div class="auth__row form-group">
-                        @Html.LabelFor(x => x.Username, new { @class = "auth__label control-label" })
-                        @Html.TextBoxFor(x => x.Username, new { @class = "auth__in auth__in--text form-control" })
+                        @Html.LabelFor(x => x.Login.Username, new { @class = "auth__label control-label" })
+                        @Html.TextBoxFor(x => x.Login.Username, new { @class = "auth__in auth__in--text form-control" })
                     </div>
                     <div class="auth__row auth__row--password form-group">
-                        @Html.LabelFor(x => x.Password, new { @class = "auth__label control-label" })
-                        @Html.TextBoxFor(x => x.Password, new { @class = "auth__in auth__in--text form-control", type = "password" })
+                        @Html.LabelFor(x => x.Login.Password, new { @class = "auth__label control-label" })
+                        @Html.TextBoxFor(x => x.Login.Password, new { @class = "auth__in auth__in--text form-control", type = "password" })
                     </div>
                     <div class="auth__row">
                         <a href="@Url.Action("RecoverPassword","Account")" class="auth__forgot">Şifremi Unuttum?</a>
-                        <button type="submit" class="auth__in auth__in--submit">Giriş Yap</button><span class="auth__remember">
-                            @Html.CheckBoxFor(x => x.RememberMe, new { @class = "in-checkbox" })
-                            @Html.LabelFor(x => x.RememberMe,new { @class = "in-label" })
+                        <button type="submit" class="auth__in auth__in--submit">Giriş Yap</button>
+                        <span class="form-group">
+                            Beni Hatırla
+                            @Html.CheckBoxFor(x => x.Login.RememberMe, new { @class = "form-control" })
                         </span>
 
                     </div>
                     <div class="auth__row"><span class="auth__links">Hesabın yok mu?<a href="@Url.Action("Register","Account")">Yeni Hesap al</a></span></div>
                 }
-                
+
                 <!-- end of block .auth__form-->
                 <!-- END AUTH LOGIN-->
             </div>

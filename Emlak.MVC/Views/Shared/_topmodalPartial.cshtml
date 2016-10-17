@@ -1,0 +1,150 @@
+﻿@model LoginAndRegisterViewModel
+@if (!HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    <ul class="auth__nav">
+        <li class="dropdown auth__nav-item">
+            <div class="dropdown__menu auth__dropdown--restore">
+                <!-- BEGIN AUTH RESTORE-->
+                <h5 class="auth__title">Reset password</h5>
+                <form action="#" class="auth__form js-restore-form js-parsley">
+                    <div class="auth__row form-group">
+                        <label for="restore-email-dropdown" class="auth__label control-label">Enter your User Name or Email</label>
+                        <input type="email" name="email" id="restore-email-dropdown" required class="auth__in auth__in--text form-control">
+                    </div>
+                    <div class="auth__row">
+                        <button type="submit" class="auth__in auth__in--submit">Reset password</button>
+                    </div>
+                    <div class="auth__row">
+                        <span class="auth__links">
+                            Back to
+                            <button type="button" class="js-user-login">Log In</button>or
+                            <button type="button" class="js-user-register">Registration</button>
+                        </span>
+                        <!-- end of block .auth__links-->
+                    </div>
+                </form>
+                <!-- end of block .auth__form-->
+                <!-- END AUTH RESTORE-->
+            </div>
+        </li>
+        <li class="dropdown auth__nav-item">
+            <button data-toggle="dropdown" type="button" class="dropdown-toggle js-auth-nav-btn auth__nav-btn">
+                <svg class="auth__icon-user">
+                    <use xlink:href="#icon-user"></use>
+                </svg><span class="header__span"> Giriş/</span>
+            </button>
+            <div class="dropdown__menu auth__dropdown--login">
+                <!-- BEGIN AUTH LOGIN-->
+                <h5 class="auth__title">Kullanıcı Girişi</h5>
+                @Html.ValidationSummary()
+                @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "auth__form js-login-form js-parsley" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="auth__row form-group">
+                        @Html.LabelFor(x => x.Login.Username, new { @class = "auth__label control-label" })
+                        @Html.TextBoxFor(x => x.Login.Username, new { @class = "auth__in auth__in--text form-control" })
+                    </div>
+                    <div class="auth__row auth__row--password form-group">
+                        @Html.LabelFor(x => x.Login.Password, new { @class = "auth__label control-label" })
+                        @Html.TextBoxFor(x => x.Login.Password, new { @class = "auth__in auth__in--text form-control", type = "password" })
+                    </div>
+                    <div class="auth__row">
+                        <a href="@Url.Action("RecoverPassword","Account")" class="auth__forgot">Şifremi Unuttum?</a>
+                        <button type="submit" class="auth__in auth__in--submit">Giriş Yap</button>
+                        <span class="form-group">
+                            Beni Hatırla
+                            @Html.CheckBoxFor(x => x.Login.RememberMe, new { @class = "form-control" })
+                        </span>
+
+                    </div>
+                    <div class="auth__row"><span class="auth__links">Hesabın yok mu?<a href="@Url.Action("Register","Account")">Yeni Hesap al</a></span></div>
+                }
+                <!-- end of block .auth__form-->
+                <!-- END AUTH LOGIN-->
+            </div>
+        </li>
+        <li class="dropdown auth__nav-item">
+            <button data-toggle="dropdown" type="button" class="dropdown-toggle auth__nav-btn"><span class="header__span">  Kayıt</span></button>
+            <div class="dropdown__menu auth__dropdown--register">
+                <!-- BEGIN AUTH REGISTER-->
+                @Html.ValidationSummary()
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "auth__form js-register-form js-parsley" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="auth__coll form-group">
+                        @Html.LabelFor(x => x.Register.Username, new { @class = "auth__label control-label" })
+                        @Html.TextBoxFor(x => x.Register.Username, new { @class = "auth__in auth__in--text form-control" })
+                    </div>
+                    <div class="auth__coll auth__coll--right form-group">
+                        @Html.LabelFor(x => x.Register.Email, new { @class = "auth__label control-label" })
+                        @Html.TextBoxFor(x => x.Register.Email, new { @class = "auth__in auth__in--text form-control" })
+                    </div>
+                    <div class="auth__coll form-group">
+                        @Html.LabelFor(x => x.Register.Name, new { @class = "auth__label control-label" })
+                        @Html.TextBoxFor(x => x.Register.Name, new { @class = "auth__in auth__in--text form-control" })
+                    </div>
+                    <div class="auth__coll auth__coll--right form-group">
+                        @Html.LabelFor(x => x.Register.Surname, new { @class = "auth__label control-label" })
+                        @Html.TextBoxFor(x => x.Register.Surname, new { @class = "auth__in auth__in--text form-control" })
+                    </div>
+                    <div class="auth__coll form-group">
+                        @Html.LabelFor(x => x.Register.Password, new { @class = "auth__label control-label" })
+                        @Html.TextBoxFor(x => x.Register.Password, new { @class = "auth__in auth__in--text form-control", type = "password" })
+                    </div>
+                    <div class="auth__coll auth__coll--right form-group">
+                        @Html.LabelFor(x => x.Register.ConfirmPassword, new { @class = "auth__label control-label" })
+                        @Html.TextBoxFor(x => x.Register.ConfirmPassword, new { @class = "auth__in auth__in--text form-control", type = "password" })
+                    </div>
+                    <div class="auth__row">
+                        <span class="auth__links">Üye iseniz<a href="@Url.Action("Login","Account")">Giriş Yap</a></span>
+                        <button type="submit" class="auth__in auth__in--submit">Kayıt Ol</button>
+                    </div>
+                }                
+                <!-- end of block .auth__form-->
+                <!-- END AUTH REGISTER-->
+            </div>
+        </li>
+    </ul>
+}
+else
+{
+    <ul class="auth__nav">
+        <li class="dropdown auth__nav-item">
+            <button data-toggle="dropdown" type="button" class="dropdown-toggle js-auth-nav-btn auth__nav-btn">
+                <svg class="auth__icon-user">
+                    <use xlink:href="#icon-user"></use>
+                </svg><span class="header__span"> Merhaba @HttpContext.Current.User.Identity.GetUserName()</span>
+            </button>
+            <div class="dropdown__menu auth__dropdown--logged-in js-user-logged-in">
+                <!-- BEGIN WORKER PROFILE-->
+                <div class="worker worker--navbar">
+                    <div class="worker__item">
+                        <h3 class="worker__name">
+                            @{
+                                var user = MembershipTools.NewUserManager().FindById(HttpContext.Current.User.Identity.GetUserId());
+
+                            }
+                            @user.Name @user.Surname
+                        </h3>
+                        <div class="worker__photo">
+                            <div class="worker__avatar">
+                                <img src="../img/noprofile.png" class="thumbnail" height="125" width="100" />
+                            </div>
+                            <button class="worker__avatar-upload">Upload your profile picture</button>
+                        </div>
+                        <nav class="worker__nav">
+                            <ul>
+                                <li><a href="my_listings.html">My listing</a></li>
+                                <li><a href="my_profile.html">My Profile</a></li>
+                                <li><a href="my_profile.html">Settings</a></li>
+                            </ul>
+                        </nav>
+                        <!-- end of block .worker__nav-->
+                    </div>
+                    <!-- end of block .worker__item-->
+                </div>
+                <!-- END WORKER PROFILE-->
+            </div>
+        </li>
+    </ul>
+                                }

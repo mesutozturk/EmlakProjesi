@@ -21,12 +21,12 @@ namespace Emlak.MVC.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterViewModel model)
+        public ActionResult Register(LoginAndRegisterViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
             var userManager = MembershipTools.NewUserManager();
-            var checkUser = userManager.FindByName(model.Name);
+            var checkUser = userManager.FindByName(model.Register.Name);
             if (checkUser != null)
             {
                 ModelState.AddModelError(string.Empty, "Bu kullanıcı zaten kayıtlı!");
@@ -34,15 +34,16 @@ namespace Emlak.MVC.Controllers
             }
             var user = new ApplicationUser()
             {
-                Name = model.Name,
-                Surname = model.Surname,
-                Email = model.Email,
-                UserName = model.Username
+                Name = model.Register.Name,
+                Surname = model.Register.Surname,
+                Email = model.Register.Email,
+                UserName = model.Register.Username
             };
-            var sonuc = userManager.Create(user, model.Password);
+            var sonuc = userManager.Create(user, model.Register.Password);
             if (sonuc.Succeeded)
             {
-                userManager.AddToRole(user.Id, "Admin");
+                //userManager.AddToRole(user.Id, "Admin");
+                userManager.AddToRole(user.Id, "User");
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -58,12 +59,12 @@ namespace Emlak.MVC.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model)
+        public async Task<ActionResult> Login(LoginAndRegisterViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
             var userManager = MembershipTools.NewUserManager();
-            var user = await userManager.FindAsync(model.Username, model.Password);
+            var user = await userManager.FindAsync(model.Login.Username, model.Login.Password);
             if (user == null)
             {
                 ModelState.AddModelError(string.Empty, "Böyle bir kullanıcı bulunamadı");
@@ -73,7 +74,7 @@ namespace Emlak.MVC.Controllers
             var userIdentity = await userManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
             authManager.SignIn(new AuthenticationProperties()
             {
-                IsPersistent = model.RememberMe
+                IsPersistent = model.Login.RememberMe
             }, userIdentity);
             return RedirectToAction("Index", "Home");
         }

@@ -28,6 +28,11 @@ namespace Emlak.MVC.Controllers
         {
             return PartialView("_footerPartial");
         }
+
+        public PartialViewResult TopModal()
+        {
+            return PartialView("_topmodalPartial");
+        }
         #endregion
     }
 }

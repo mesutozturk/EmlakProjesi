@@ -1,4 +1,4 @@
-﻿@model RegisterViewModel
+﻿@model LoginAndRegisterViewModel
 @{
     ViewBag.Title = "Emlak Sitemi Kayıt Ekranı";
     Layout = "~/Views/Shared/_mainLayout.cshtml";
@@ -18,28 +18,28 @@
                 {
                     @Html.AntiForgeryToken()
                     <div class="auth__coll form-group">
-                        @Html.LabelFor(x=>x.Username,new { @class = "auth__label control-label" })
-                        @Html.TextBoxFor(x=>x.Username,new { @class = "auth__in auth__in--text form-control" })
+                        @Html.LabelFor(x=>x.Register.Username,new { @class = "auth__label control-label" })
+                        @Html.TextBoxFor(x=>x.Register.Username,new { @class = "auth__in auth__in--text form-control" })
                     </div>
                     <div class="auth__coll auth__coll--right form-group">
-                        @Html.LabelFor(x => x.Email, new { @class = "auth__label control-label" })
-                        @Html.TextBoxFor(x => x.Email, new { @class = "auth__in auth__in--text form-control" })
+                        @Html.LabelFor(x => x.Register.Email, new { @class = "auth__label control-label" })
+                        @Html.TextBoxFor(x => x.Register.Email, new { @class = "auth__in auth__in--text form-control" })
                     </div>
                     <div class="auth__coll form-group">
-                        @Html.LabelFor(x => x.Name, new { @class = "auth__label control-label" })
-                        @Html.TextBoxFor(x => x.Name, new { @class = "auth__in auth__in--text form-control" })
+                        @Html.LabelFor(x => x.Register.Name, new { @class = "auth__label control-label" })
+                        @Html.TextBoxFor(x => x.Register.Name, new { @class = "auth__in auth__in--text form-control" })
                     </div>
                     <div class="auth__coll auth__coll--right form-group">
-                        @Html.LabelFor(x => x.Surname, new { @class = "auth__label control-label" })
-                        @Html.TextBoxFor(x => x.Surname, new { @class = "auth__in auth__in--text form-control" })
+                        @Html.LabelFor(x => x.Register.Surname, new { @class = "auth__label control-label" })
+                        @Html.TextBoxFor(x => x.Register.Surname, new { @class = "auth__in auth__in--text form-control" })
                     </div>
                     <div class="auth__coll form-group">
-                        @Html.LabelFor(x => x.Password, new { @class = "auth__label control-label" })
-                        @Html.TextBoxFor(x => x.Password, new { @class = "auth__in auth__in--text form-control",type="password" })
+                        @Html.LabelFor(x => x.Register.Password, new { @class = "auth__label control-label" })
+                        @Html.TextBoxFor(x => x.Register.Password, new { @class = "auth__in auth__in--text form-control",type="password" })
                     </div>
                     <div class="auth__coll auth__coll--right form-group">
-                        @Html.LabelFor(x => x.ConfirmPassword, new { @class = "auth__label control-label" })
-                        @Html.TextBoxFor(x => x.ConfirmPassword, new { @class = "auth__in auth__in--text form-control", type = "password" })
+                        @Html.LabelFor(x => x.Register.ConfirmPassword, new { @class = "auth__label control-label" })
+                        @Html.TextBoxFor(x => x.Register.ConfirmPassword, new { @class = "auth__in auth__in--text form-control", type = "password" })
                     </div>
                     <div class="auth__row">
                         <span class="auth__links">Üye iseniz<a href="@Url.Action("Login","Account")">Giriş Yap</a></span>

@@ -492,6 +492,7 @@
     <Content Include="assets\media-demo\workers\worker-3.jpg" />
     <Content Include="assets\media-demo\workers\worker-4.jpg" />
     <Content Include="Global.asax" />
+    <Content Include="img\noprofile.png" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -530,6 +531,7 @@
     <Content Include="Views\Shared\_footerPartial.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Shared\_topmodalPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
