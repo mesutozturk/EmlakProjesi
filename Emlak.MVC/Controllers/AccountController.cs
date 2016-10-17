@@ -6,6 +6,8 @@ using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -84,6 +86,88 @@ namespace Emlak.MVC.Controllers
             var authManager = HttpContext.GetOwinContext().Authentication;
             authManager.SignOut();
             return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        public ActionResult Profile()
+        {
+            var userManager = MembershipTools.NewUserManager();
+            var id = HttpContext.User.Identity.GetUserId();
+            var user = userManager.FindById(id);
+
+            ProfileViewModel model = new ProfileViewModel()
+            {
+                AvatarPath = user.AvatarPath,
+                Email = user.Email,
+                Name = user.Name,
+                Surname = user.Surname,
+                Username = user.UserName
+            };
+
+            return View(model);
+        }
+
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<ActionResult> Profile(ProfileViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+            var userStore = MembershipTools.NewUserStore();
+            var userManager = new UserManager<ApplicationUser>(userStore);
+            var user = userManager.FindById(HttpContext.User.Identity.GetUserId());
+            user.Email = model.Email;
+            user.Name = model.Name;
+            user.Surname = model.Surname;
+
+            await userStore.UpdateAsync(user);
+            await userStore.Context.SaveChangesAsync();
+
+            return RedirectToAction("Profile");
+        }
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangePassword(ProfileViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return RedirectToAction("Profile");
+            var userStore = MembershipTools.NewUserStore();
+            var userManager = new UserManager<ApplicationUser>(userStore);
+            var user = userManager.FindById(HttpContext.User.Identity.GetUserId());
+
+            var checkuser = userManager.Find(user.UserName, model.OldPassword);
+            if (checkuser == null)
+            {
+                ModelState.AddModelError(string.Empty, "Mevcut şifreniz yanlış");
+                return RedirectToAction("Profile");
+            }
+            await userStore.SetPasswordHashAsync(user, userManager.PasswordHasher.HashPassword(model.ConfirmPassword));
+            await userStore.UpdateAsync(user);
+            await userStore.Context.SaveChangesAsync();
+
+            using (var smtp = new SmtpClient())
+            {
+                var message = new MailMessage();
+                message.To.Add(new MailAddress(user.Email));
+                message.From = new MailAddress("crazywissen503@gmail.com");
+                message.Subject = "Parolanız Değişti!";
+                message.IsBodyHtml = true;
+                message.Body = $"Merhaba {user.UserName}, </br> Şifreniz Panelden değiştirilmiştir.";
+                var credential = new NetworkCredential()
+                {
+                    UserName = "crazywissen503@gmail.com",
+                    Password = "wissen503"
+                };
+                smtp.Credentials = credential;
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587;
+                smtp.EnableSsl = true;
+                await smtp.SendMailAsync(message);
+            }
+
+            return RedirectToAction("Logout");
         }
     }
 }

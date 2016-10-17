@@ -49,7 +49,7 @@
                         @Html.TextBoxFor(x => x.Login.Password, new { @class = "auth__in auth__in--text form-control", type = "password" })
                     </div>
                     <div class="auth__row">
-                        <a href="@Url.Action("RecoverPassword","Account")" class="auth__forgot">Şifremi Unuttum?</a>
+                        <a href="@Url.Action("RecoverPassword", "Account")" class="auth__forgot">Şifremi Unuttum?</a>
                         <button type="submit" class="auth__in auth__in--submit">Giriş Yap</button>
                         <span class="form-group">
                             Beni Hatırla
@@ -57,7 +57,7 @@
                         </span>
 
                     </div>
-                    <div class="auth__row"><span class="auth__links">Hesabın yok mu?<a href="@Url.Action("Register","Account")">Yeni Hesap al</a></span></div>
+                    <div class="auth__row"><span class="auth__links">Hesabın yok mu?<a href="@Url.Action("Register", "Account")">Yeni Hesap al</a></span></div>
                 }
                 <!-- end of block .auth__form-->
                 <!-- END AUTH LOGIN-->
@@ -96,10 +96,10 @@
                         @Html.TextBoxFor(x => x.Register.ConfirmPassword, new { @class = "auth__in auth__in--text form-control", type = "password" })
                     </div>
                     <div class="auth__row">
-                        <span class="auth__links">Üye iseniz<a href="@Url.Action("Login","Account")">Giriş Yap</a></span>
+                        <span class="auth__links">Üye iseniz<a href="@Url.Action("Login", "Account")">Giriş Yap</a></span>
                         <button type="submit" class="auth__in auth__in--submit">Kayıt Ol</button>
                     </div>
-                }                
+                }
                 <!-- end of block .auth__form-->
                 <!-- END AUTH REGISTER-->
             </div>
@@ -122,21 +122,26 @@ else
                         <h3 class="worker__name">
                             @{
                                 var user = MembershipTools.NewUserManager().FindById(HttpContext.Current.User.Identity.GetUserId());
-
+                                var nophoto = "../img/noprofile.png";
                             }
                             @user.Name @user.Surname
                         </h3>
                         <div class="worker__photo">
                             <div class="worker__avatar">
-                                <img src="../img/noprofile.png" class="thumbnail" height="125" width="100" />
+                                @if (string.IsNullOrEmpty(user.AvatarPath))
+                                {
+                                    <img src="@nophoto" class="thumbnail" height="125" width="100" />
+                                }
+                                else
+                                {
+                                    <img src="@user.AvatarPath" class="thumbnail" height="125" width="100" />
+                                }
                             </div>
-                            <button class="worker__avatar-upload">Upload your profile picture</button>
                         </div>
                         <nav class="worker__nav">
                             <ul>
-                                <li><a href="my_listings.html">My listing</a></li>
-                                <li><a href="my_profile.html">My Profile</a></li>
-                                <li><a href="my_profile.html">Settings</a></li>
+                                <li><a href="@Url.Action("Profile","Account")">Profil Sayfam</a></li>
+                                <li><a href="@Url.Action("Logout","Account")">Çıkış Yap</a></li>
                             </ul>
                         </nav>
                         <!-- end of block .worker__nav-->
@@ -147,4 +152,4 @@ else
             </div>
         </li>
     </ul>
-                                }
+}

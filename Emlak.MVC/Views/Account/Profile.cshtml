@@ -1,0 +1,207 @@
+﻿@model ProfileViewModel
+@{
+    ViewBag.Title = Model.Username + " Profili Düzenle";
+    Layout = "~/Views/Shared/_mainLayout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="listing listing--properties-list">
+            <header class="listing__header">
+                <h1 class="listing__title">@Model.Username Profil Sayfası</h1>
+                <h2 class="listing__headline">Kişisel bilgilerinizi düzenleyebilirsiniz</h2>
+            </header>
+            <div class="listing__panel"><span class="listing__header-text listing__header-text--edit">Flexible configuration and editing forms, add and edit listing information, photos and location of the position</span></div>
+            <div class="listing__main">
+                <div class="form-property">
+                    @Html.ValidationSummary()
+                    @using (Html.BeginForm("Profile", "Account", FormMethod.Post, new { @class = "form-property__form js-form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <header class="form-property__header">
+                            <h3 data-rel="#form-property-block-2" class="form-property__title js-form-property-title">
+                                Bilgiler
+                            </h3>
+                        </header>
+                        <div id="form-property-block-2" class="form-property__block js-form-block">
+                            <div class="form-property__row-item">
+                                <div class="form-property__group form-group">
+                                    @Html.LabelFor(x => x.Name, new { @class = "form-property__label control-label" })
+                                    @Html.TextBoxFor(x => x.Name, new { @class = "form-property__control form-control form-property__control form-control--text" })
+                                </div>
+                                <div class="form-property__group form-group">
+                                    @Html.LabelFor(x => x.Surname, new { @class = "form-property__label control-label" })
+                                    @Html.TextBoxFor(x => x.Surname, new { @class = "form-property__control form-control form-property__control form-control--text" })
+                                </div>
+                                <div class="form-property__group form-group">
+                                    @Html.LabelFor(x => x.Email, new { @class = "form-property__label control-label" })
+                                    @Html.TextBoxFor(x => x.Email, new { @class = "form-property__control form-control form-property__control form-control--text" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-property__block form-property__block--submit">
+                            <div class="form-property__buttons">
+                                <button class="form-property__btn form-property__btn--action" type="submit">
+                                    Kaydet
+                                </button>
+                            </div>
+                        </div>
+                    }
+                    <hr>
+                    @Html.ValidationSummary()
+                    @using (Html.BeginForm("ChangePassword", "Account", FormMethod.Post, new { @class = "form-property__form js-form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <header class="form-property__header">
+                            <h3 data-rel="#form-property-block-5" class="form-property__title js-form-property-title">
+                                Şifreyi değiştir
+                            </h3>
+                        </header>
+                        <div id="form-property-block-5" class="form-property__block js-form-block">
+                            <div class="form-property__row-item">
+                                <div class="col-sm-12 col-md-6 col-lg-4">
+                                    <div class="row">
+                                        <div class="form-property__group--large form-group">
+                                            @Html.LabelFor(x => x.OldPassword, new
+                                       {
+                                           @class = "form-property__label control-label"
+                                       })
+                                            @Html.TextBoxFor(x => x.OldPassword, new { @class = "form-property__control form-control search__control--text", type = "password" })
+                                        </div>
+                                        <div class="form-property__group--large form-group">
+                                            @Html.LabelFor(x => x.Password, new
+                                       {
+                                           @class = "form-property__label control-label"
+                                       })
+                                            @Html.TextBoxFor(x => x.Password, new { @class = "form-property__control form-control search__control--text", type = "password" })
+                                        </div>
+                                        <div class="form-property__group--large form-group">
+                                            @Html.LabelFor(x => x.ConfirmPassword, new
+                                       {
+                                           @class = "form-property__label control-label"
+                                       })
+                                            @Html.TextBoxFor(x => x.ConfirmPassword, new { @class = "form-property__control form-control search__control--text", type = "password" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-8">
+                                    <div class="row">
+                                        <div class="form-property__group--middle">
+                                            <h5>Uyarı</h5>
+                                            <p>Şifreyi unutmayın :)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-property__block form-property__block--submit">
+                            <div class="form-property__buttons">
+                                <button class="form-property__btn form-property__btn--action" type="submit">
+                                    Şifreyi Değiştir
+                                </button>
+                            </div>
+                        </div>
+                    }
+
+
+                </div>
+
+            </div>
+        </div>
+        <div class="sidebar">
+            <!-- BEGIN WORKER PROFILE-->
+            <div class="worker worker--sidebar-advanced worker--sidebar-nav">
+                <div class="worker__item">
+                    <h3 class="worker__name">Jenniffer Hartnet</h3>
+                    <div class="worker__photo">
+                        <div class="worker__avatar">
+                            <svg>
+                                <use xlink:href="#icon-avatar"></use>
+                            </svg>
+                        </div>
+                        <button class="worker__avatar-upload">Upload your profile picture</button>
+                    </div>
+                    <nav class="worker__nav">
+                        <ul>
+                            <li><a href="my_listings.html">My listing</a></li>
+                            <li><a href="my_profile.html">My Profile</a></li>
+                            <li><a href="my_profile.html">Settings</a></li>
+                        </ul>
+                    </nav>
+                    <!-- end of block .worker__nav-->
+                </div>
+                <!-- end of block .worker__item-->
+            </div>
+            <!-- END WORKER PROFILE-->
+            <!-- BEGIN WORKER SIDEBAR-->
+            <section class="worker worker--sidebar js-unhide-block">
+                <button type="button" class="widget__show js-unhide">Show workers</button>
+                <header class="worker__header">
+                    <h3 class="worker__title">Our Agents</h3>
+                    <h4 class="worker__headline">Find your apartment or house on the exact key parameters.</h4>
+                </header>
+                <!-- end of block .worker__header-->
+                <div class="worker__list">
+                    <div data-animate-end="animate-end" class="worker__item vcard">
+                        <div class="worker__photo">
+                            <a href="agent_listing.html" class="item-photo item-photo--static">
+                                <img src="assets/media-demo/workers/worker-1.jpg" alt="Christopher Pakulla" class="photo">
+                                <figure class="item-photo__hover"><span class="item-photo__more">View</span></figure>
+                            </a>
+                        </div>
+                        <h3 class="worker__name fn">Christopher Pakulla</h3>
+                        <div class="worker__post">Realtor, West USA Realty</div><a href="tel:+44(0)2035102390" class="worker__tel uri">+44 (0) 20 3510 2390</a>
+                    </div>
+                    <!-- end of block .worker__item-->
+                    <div data-animate-end="animate-end" class="worker__item vcard">
+                        <div class="worker__photo">
+                            <a href="agent_listing.html" class="item-photo item-photo--static">
+                                <img src="assets/media-demo/workers/worker-2.jpg" alt="Lisa Wemert" class="photo">
+                                <figure class="item-photo__hover"><span class="item-photo__more">View</span></figure>
+                            </a>
+                        </div>
+                        <h3 class="worker__name fn">Lisa Wemert</h3>
+                        <div class="worker__post">Managing Broker/Partner, e-PRO</div><a href="tel:+44(0)203510567" class="worker__tel uri">+44 (0) 20 3510 567</a>
+                    </div>
+                    <!-- end of block .worker__item-->
+                    <div data-animate-end="animate-end" class="worker__item vcard">
+                        <div class="worker__photo">
+                            <a href="agent_listing.html" class="item-photo item-photo--static">
+                                <img src="assets/media-demo/workers/worker-3.jpg" alt="Mariusz Ciesla" class="photo">
+                                <figure class="item-photo__hover"><span class="item-photo__more">View</span></figure>
+                            </a>
+                        </div>
+                        <h3 class="worker__name fn">Mariusz Ciesla</h3>
+                        <div class="worker__post">Real Estate Professional</div><a href="tel:+44(0)203510334" class="worker__tel uri">+44 (0) 20 3510 334</a>
+                    </div>
+                    <!-- end of block .worker__item-->
+                </div>
+                <!-- end of block .worker__list-->
+            </section>
+            <!-- END WORKER SIDEBAR-->
+            <!-- BEGIN SECTION ARTICLE-->
+            <section class="article js-unhide-block article--sidebar">
+                <button type="button" class="widget__show js-unhide">Show articles</button>
+                <div class="article__header">
+                    <h3 class="article__title">News & Blog</h3>
+                    <h4 class="article__headline">Find your apartment or house on the exact key parameters.</h4>
+                </div>
+                <!-- end of block .article__header-->
+                <div class="article__list">
+                    <div class="article__item">
+                        <div class="article__details">
+                            <a href="blog_details.html" class="article__item-title">You've been approved for a rental home. Now what?</a>
+                            <time datetime="2009-08-29" class="article__time">Mon - 3 Sep - 3:17 PM</time>
+                            <div class="article__intro">
+                                <p>Congratulations! You've found the perfect rental property and your application has been approved. Now there's just a few things you'll need ...</p>
+                            </div><a href="blog_details.html" class="article__more">Read more</a>
+                        </div>
+                    </div>
+                    <!-- end of block .article__item-->
+                </div>
+                <!-- end of block .article__list-->
+            </section>
+            <!-- END SECTION ARTICLE-->
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
