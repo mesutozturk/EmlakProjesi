@@ -89,6 +89,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\RepositoryBase.cs" />
+    <Compile Include="Settings\SiteSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

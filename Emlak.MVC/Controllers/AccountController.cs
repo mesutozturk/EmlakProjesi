@@ -1,4 +1,5 @@
 ﻿using Emlak.BLL.Account;
+using Emlak.BLL.Settings;
 using Emlak.Entity.IdentityModels;
 using Emlak.Entity.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -147,25 +148,12 @@ namespace Emlak.MVC.Controllers
             await userStore.UpdateAsync(user);
             await userStore.Context.SaveChangesAsync();
 
-            using (var smtp = new SmtpClient())
+            await SiteSettings.SendMail(new MailModel()
             {
-                var message = new MailMessage();
-                message.To.Add(new MailAddress(user.Email));
-                message.From = new MailAddress("crazywissen503@gmail.com");
-                message.Subject = "Parolanız Değişti!";
-                message.IsBodyHtml = true;
-                message.Body = $"Merhaba {user.UserName}, </br> Şifreniz Panelden değiştirilmiştir.";
-                var credential = new NetworkCredential()
-                {
-                    UserName = "crazywissen503@gmail.com",
-                    Password = "wissen503"
-                };
-                smtp.Credentials = credential;
-                smtp.Host = "smtp.gmail.com";
-                smtp.Port = 587;
-                smtp.EnableSsl = true;
-                await smtp.SendMailAsync(message);
-            }
+                Message = $"Merhaba {user.UserName}, </br> Şifreniz Panelden değiştirilmiştir.",
+                Subject = "Şifreniz Değişti!",
+                To = user.Email
+            });
 
             return RedirectToAction("Logout");
         }
