@@ -533,6 +533,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_topmodalPartial.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
+    <Content Include="Views\Account\RecoverPassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

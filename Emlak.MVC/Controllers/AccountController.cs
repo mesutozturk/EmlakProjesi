@@ -157,5 +157,54 @@ namespace Emlak.MVC.Controllers
 
             return RedirectToAction("Logout");
         }
+
+        public ActionResult RecoverPassword()
+        {
+            return View();
+        }
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<ActionResult> RecoverPassword(string recover)
+        {
+            var userStore = MembershipTools.NewUserStore();
+            var userManager = new UserManager<ApplicationUser>(userStore);
+            var user = userManager.FindByEmail(recover);
+            var user2 = userManager.FindByName(recover);
+            string newpass = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 6);
+            if (user == null && user2 == null)
+            {
+                ModelState.AddModelError(string.Empty, "Kullanıcı Bulunamadı");
+                return View();
+            }
+            else if (user != null)
+            {
+                await userStore.SetPasswordHashAsync(user, userManager.PasswordHasher.HashPassword(newpass));
+                await userStore.UpdateAsync(user);
+                await userStore.Context.SaveChangesAsync();
+                await SiteSettings.SendMail(new MailModel()
+                {
+                    To = user.Email,
+                    Subject = "Yeni Parolanız",
+                    Message = $"Merhaba {user.UserName} </br>Yeni Parolanız: <strong>{newpass}</strong></br>"
+                });
+                return RedirectToAction("Login", "Account");
+            }
+            else if (user2 != null)
+            {
+                await userStore.SetPasswordHashAsync(user2, userManager.PasswordHasher.HashPassword(newpass));
+                await userStore.UpdateAsync(user2);
+                await userStore.Context.SaveChangesAsync();
+                await SiteSettings.SendMail(new MailModel()
+                {
+                    To = user2.Email,
+                    Subject = "Yeni Parolanız",
+                    Message = $"Merhaba {user2.UserName} </br>Yeni Parolanız: <strong>{newpass}</strong></br>"
+                });
+                return RedirectToAction("Login", "Account");
+            }
+            else
+                return View();
+            
+        }
     }
 }
