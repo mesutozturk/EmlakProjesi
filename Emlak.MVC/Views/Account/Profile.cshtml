@@ -116,14 +116,15 @@
                         <div class="worker__avatar">
                             @if (string.IsNullOrEmpty(Model.AvatarPath))
                             {
-                                <img src="../img/noprofile.png" class="img-responsive img-rounded useravatar" style="margin: 0 auto" />
+                                <img src="../img/noprofile.png" id="useravatar" class="img-responsive img-rounded useravatar" style="margin: 0 auto" />
                             }
                             else
                             {
-                                <img src="@Model.AvatarPath" class="img-responsive img-rounded useravatar" style="margin: 0 auto" />
+                                <img src="@Model.AvatarPath" id="useravatar" class="img-responsive img-rounded useravatar" style="margin: 0 auto" />
                             }
                         </div>
-                        <input type="file" id="avatar" class="form-control" />
+                        <input type="file" id="avatar" class="form-control" /><br />
+                        @*<button type="button" id="uploadavatar" class="auth__in auth__in--submit">Resmi Yükle</button>*@
                     </div>
                     @*<nav class="worker__nav">
                             <ul>
@@ -149,7 +150,7 @@
                     <div data-animate-end="animate-end" class="worker__item vcard">
                         <div class="worker__photo">
                             <a href="agent_listing.html" class="item-photo item-photo--static">
-                                <img src="assets/media-demo/workers/worker-1.jpg" alt="Christopher Pakulla" class="photo">
+                                <img src="../assets/media-demo/workers/worker-1.jpg" alt="Christopher Pakulla" class="photo">
                                 <figure class="item-photo__hover"><span class="item-photo__more">View</span></figure>
                             </a>
                         </div>
@@ -160,7 +161,7 @@
                     <div data-animate-end="animate-end" class="worker__item vcard">
                         <div class="worker__photo">
                             <a href="agent_listing.html" class="item-photo item-photo--static">
-                                <img src="assets/media-demo/workers/worker-2.jpg" alt="Lisa Wemert" class="photo">
+                                <img src="../assets/media-demo/workers/worker-2.jpg" alt="Lisa Wemert" class="photo">
                                 <figure class="item-photo__hover"><span class="item-photo__more">View</span></figure>
                             </a>
                         </div>
@@ -171,7 +172,7 @@
                     <div data-animate-end="animate-end" class="worker__item vcard">
                         <div class="worker__photo">
                             <a href="agent_listing.html" class="item-photo item-photo--static">
-                                <img src="assets/media-demo/workers/worker-3.jpg" alt="Mariusz Ciesla" class="photo">
+                                <img src="../assets/media-demo/workers/worker-3.jpg" alt="Mariusz Ciesla" class="photo">
                                 <figure class="item-photo__hover"><span class="item-photo__more">View</span></figure>
                             </a>
                         </div>

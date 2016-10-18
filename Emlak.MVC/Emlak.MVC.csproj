@@ -491,9 +491,13 @@
     <Content Include="assets\media-demo\workers\worker-2.jpg" />
     <Content Include="assets\media-demo\workers\worker-3.jpg" />
     <Content Include="assets\media-demo\workers\worker-4.jpg" />
+    <Content Include="Content\jquery.drag-n-crop.css" />
     <Content Include="Global.asax" />
     <Content Include="img\noprofile.png" />
     <Content Include="Script\app.js" />
+    <Content Include="Script\imagesloaded.js" />
+    <Content Include="Script\jquery.drag-n-crop.js" />
+    <Content Include="Script\scale.fix.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

@@ -1,9 +1,9 @@
 ﻿$('#avatar').change(function () {
+    //readURL(this);
     var data = new FormData();
     var file = $('#avatar').get(0).files;
     if (file.length > 0) {
         data.append("myAvatar", file[0]);
-
         $.ajax({
             url: '../Account/UploadAvatar',
             type: 'POST',
@@ -21,3 +21,17 @@
         });
     };
 });
+function readURL(input) {
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('.useravatar').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+//$('#useravatar').dragncrop({ overlay: true, overflow: true });
