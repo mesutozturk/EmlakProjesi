@@ -6,11 +6,13 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace Emlak.MVC.Controllers
@@ -204,7 +206,64 @@ namespace Emlak.MVC.Controllers
             }
             else
                 return View();
-            
+
+        }
+        [HttpPost]
+        public async Task<JsonResult> UploadAvatar()
+        {
+            if (System.Web.HttpContext.Current.Request.Files.AllKeys.Any())
+            {
+                string dosyayolu = string.Empty;
+                try
+                {
+                    var foto = System.Web.HttpContext.Current.Request.Files["myAvatar"];
+                    string fileName = Path.GetFileNameWithoutExtension(foto.FileName);
+                    string extName = Path.GetExtension(foto.FileName);
+                    fileName += Guid.NewGuid().ToString().Replace("-", "");
+                    fileName = SiteSettings.UrlFormatConverter(fileName);
+                    dosyayolu = Server.MapPath("../Upload/Avatars/") + fileName + extName;
+                    foto.SaveAs(dosyayolu);
+
+                    WebImage img = new WebImage(dosyayolu);
+                    img.AddTextWatermark("Wissen", "RoyalBlue", opacity: 95,fontSize:25,fontFamily:"Verdana");
+                    img.Resize(200, 200, false);
+                    img.Save(dosyayolu);
+
+
+                    var userStore = MembershipTools.NewUserStore();
+                    var userManager = new UserManager<ApplicationUser>(userStore);
+                    var user = userManager.FindById(HttpContext.User.Identity.GetUserId());
+
+                    if (!string.IsNullOrEmpty(user.AvatarPath))
+                    {
+                        var silinecekResim = Server.MapPath(user.AvatarPath);
+                        System.IO.File.Delete(silinecekResim);
+                    }
+
+                    user.AvatarPath = "../Upload/Avatars/" + fileName + extName;
+                    await userStore.UpdateAsync(user);
+                    await userStore.Context.SaveChangesAsync();
+                    return Json(new
+                    {
+                        success = true,
+                        path = user.AvatarPath
+                    }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        errmessage = ex.Message
+                    }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json(new
+            {
+                success = false,
+                errmessage = "Hata Oluştu"
+            }, JsonRequestBehavior.AllowGet);
+
         }
     }
 }

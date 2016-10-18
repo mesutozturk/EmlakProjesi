@@ -493,6 +493,7 @@
     <Content Include="assets\media-demo\workers\worker-4.jpg" />
     <Content Include="Global.asax" />
     <Content Include="img\noprofile.png" />
+    <Content Include="Script\app.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -544,6 +545,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Upload\Avatars\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Emlak.BLL\Emlak.BLL.csproj">

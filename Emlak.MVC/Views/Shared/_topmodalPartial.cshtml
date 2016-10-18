@@ -130,11 +130,11 @@ else
                             <div class="worker__avatar">
                                 @if (string.IsNullOrEmpty(user.AvatarPath))
                                 {
-                                    <img src="@nophoto" class="thumbnail" height="125" width="100" />
+                                    <img src="@nophoto"  class="img-responsive img-rounded useravatar" style="margin: 0 auto" />
                                 }
                                 else
                                 {
-                                    <img src="@user.AvatarPath" class="thumbnail" height="125" width="100" />
+                                    <img src="@user.AvatarPath" class="img-responsive img-rounded useravatar" style="margin: 0 auto" />
                                 }
                             </div>
                         </div>

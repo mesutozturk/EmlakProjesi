@@ -111,22 +111,27 @@
             <!-- BEGIN WORKER PROFILE-->
             <div class="worker worker--sidebar-advanced worker--sidebar-nav">
                 <div class="worker__item">
-                    <h3 class="worker__name">Jenniffer Hartnet</h3>
+                    <h3 class="worker__name">@Model.Name @Model.Surname</h3>
                     <div class="worker__photo">
                         <div class="worker__avatar">
-                            <svg>
-                                <use xlink:href="#icon-avatar"></use>
-                            </svg>
+                            @if (string.IsNullOrEmpty(Model.AvatarPath))
+                            {
+                                <img src="../img/noprofile.png" class="img-responsive img-rounded useravatar" style="margin: 0 auto" />
+                            }
+                            else
+                            {
+                                <img src="@Model.AvatarPath" class="img-responsive img-rounded useravatar" style="margin: 0 auto" />
+                            }
                         </div>
-                        <button class="worker__avatar-upload">Upload your profile picture</button>
+                        <input type="file" id="avatar" class="form-control" />
                     </div>
-                    <nav class="worker__nav">
-                        <ul>
-                            <li><a href="my_listings.html">My listing</a></li>
-                            <li><a href="my_profile.html">My Profile</a></li>
-                            <li><a href="my_profile.html">Settings</a></li>
-                        </ul>
-                    </nav>
+                    @*<nav class="worker__nav">
+                            <ul>
+                                <li><a href="my_listings.html">My listing</a></li>
+                                <li><a href="my_profile.html">My Profile</a></li>
+                                <li><a href="my_profile.html">Settings</a></li>
+                            </ul>
+                        </nav>*@
                     <!-- end of block .worker__nav-->
                 </div>
                 <!-- end of block .worker__item-->
