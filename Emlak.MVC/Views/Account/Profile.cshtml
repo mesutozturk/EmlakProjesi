@@ -14,9 +14,8 @@
                 <span class="listing__header-text listing__header-text--edit">
                     @if (HttpContext.Current.User.IsInRole("Passive"))
                     {
-                        <span><a href="@Url.Action("ResendActivation","Account")" target="_blank">Aktivasyon kodunu tekrar yolla</a></span><br />
+                        <a href="@Url.Action("ResendActivation","Account")">Aktivasyon kodunu tekrar yolla</a>
                     }
-                    Flexible configuration and editing forms, add and edit listing information, photos and location of the position
                 </span>
             </div>
             <div class="listing__main">

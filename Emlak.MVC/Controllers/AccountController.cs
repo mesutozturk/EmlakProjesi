@@ -131,7 +131,38 @@ namespace Emlak.MVC.Controllers
             var userStore = MembershipTools.NewUserStore();
             var userManager = new UserManager<ApplicationUser>(userStore);
             var user = userManager.FindById(HttpContext.User.Identity.GetUserId());
-            user.Email = model.Email;
+            if (user.Email != model.Email)
+            {
+                userManager.AddToRole(user.Id, "Passive");
+                user.Email = model.Email;
+                user.EmailConfirmed = false;
+                if (HttpContext.User.IsInRole("User"))
+                {
+                    userManager.RemoveFromRole(user.Id, "User");
+                    user.PreRole = "User";
+                }
+
+                else if (HttpContext.User.IsInRole("Admin"))
+                {
+                    userManager.RemoveFromRole(user.Id, "Admin");
+                    user.PreRole = "Admin";
+                }
+                var aktvisyonKodu = Guid.NewGuid().ToString().Replace("-", "");
+                user.ActivationCode = aktvisyonKodu;
+                await SiteSettings.SendMail(new MailModel()
+                {
+                    Message = $"Merhaba {user.UserName}, </br> Sistemi Kullanabilmek için Hesabınız tekrar aktifleştirmeniz gerekiyor. <br/> Hesabınızı aktifleştirmek için <a href='http://localhost:28442/Account/Activation?code={aktvisyonKodu}'>Aktivasyon Kodu</a>"+Server.MachineName,
+                    Subject = "Hesabınızı Aktifleştirmeniz Gerekiyor",
+                    To = user.Email
+                });
+                var authManager = HttpContext.GetOwinContext().Authentication;
+                var userIdentity = await userManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+                authManager.SignIn(new AuthenticationProperties()
+                {
+                    IsPersistent = true
+                }, userIdentity);
+            }
+
             user.Name = model.Name;
             user.Surname = model.Surname;
 
@@ -290,11 +321,25 @@ namespace Emlak.MVC.Controllers
             sonuc.EmailConfirmed = true;
             await userStore.UpdateAsync(sonuc);
             await userStore.Context.SaveChangesAsync();
-
-            var roleManager = MembershipTools.NewRoleManager();
+            
             userManager.RemoveFromRole(sonuc.Id, "Passive");
-            userManager.AddToRole(sonuc.Id, "User");
+            if (string.IsNullOrEmpty(sonuc.PreRole))
+                userManager.AddToRole(sonuc.Id, "User");
+            else
+                userManager.AddToRole(sonuc.Id, sonuc.PreRole);
             ViewBag.sonuc = $"Merhaba, {sonuc.UserName} Aktivasyon Başarılı.";
+            await SiteSettings.SendMail(new MailModel()
+            {
+                Message = $"Merhaba, {sonuc.UserName} Aktivasyon Başarılı.",
+                Subject = "Aktivasyon",
+                To = sonuc.Email
+            });
+            var authManager = HttpContext.GetOwinContext().Authentication;
+            var userIdentity = await userManager.CreateIdentityAsync(sonuc, DefaultAuthenticationTypes.ApplicationCookie);
+            authManager.SignIn(new AuthenticationProperties()
+            {
+                IsPersistent = true
+            }, userIdentity);
             return View();
         }
         [Authorize]

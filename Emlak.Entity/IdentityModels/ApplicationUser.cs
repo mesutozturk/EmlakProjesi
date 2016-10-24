@@ -20,6 +20,7 @@ namespace Emlak.Entity.IdentityModels
         public DateTime RegisterDate { get; set; } = DateTime.Now;
         public string AvatarPath { get; set; }
         public string ActivationCode { get; set; }
+        public string PreRole { get; set; }
         public virtual List<Konut> Konutlar { get; set; } = new List<Konut>();
     }
 }
