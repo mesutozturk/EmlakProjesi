@@ -10,7 +10,15 @@
                 <h1 class="listing__title">@Model.Username Profil Sayfası</h1>
                 <h2 class="listing__headline">Kişisel bilgilerinizi düzenleyebilirsiniz</h2>
             </header>
-            <div class="listing__panel"><span class="listing__header-text listing__header-text--edit">Flexible configuration and editing forms, add and edit listing information, photos and location of the position</span></div>
+            <div class="listing__panel">
+                <span class="listing__header-text listing__header-text--edit">
+                    @if (HttpContext.Current.User.IsInRole("Passive"))
+                    {
+                        <span><a href="@Url.Action("ResendActivation","Account")" target="_blank">Aktivasyon kodunu tekrar yolla</a></span><br />
+                    }
+                    Flexible configuration and editing forms, add and edit listing information, photos and location of the position
+                </span>
+            </div>
             <div class="listing__main">
                 <div class="form-property">
                     @Html.ValidationSummary()

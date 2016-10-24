@@ -19,7 +19,7 @@ namespace Emlak.Entity.IdentityModels
         [Column(TypeName = "smalldatetime")]
         public DateTime RegisterDate { get; set; } = DateTime.Now;
         public string AvatarPath { get; set; }
-
+        public string ActivationCode { get; set; }
         public virtual List<Konut> Konutlar { get; set; } = new List<Konut>();
     }
 }

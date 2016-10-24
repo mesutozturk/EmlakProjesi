@@ -42,6 +42,14 @@ namespace Emlak.MVC
                     Description = "Yasaklı Üye"
                 });
             }
+            if (!roleManager.RoleExists("Passive"))
+            {
+                roleManager.Create(new ApplicationRole()
+                {
+                    Name = "Passive",
+                    Description = "Mail Aktivasyonu Gerekli"
+                });
+            }
         }
     }
 }

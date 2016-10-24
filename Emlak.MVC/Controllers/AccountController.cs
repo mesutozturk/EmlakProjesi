@@ -26,7 +26,7 @@ namespace Emlak.MVC.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(LoginAndRegisterViewModel model)
+        public async Task<ActionResult> Register(LoginAndRegisterViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
@@ -37,18 +37,29 @@ namespace Emlak.MVC.Controllers
                 ModelState.AddModelError(string.Empty, "Bu kullanıcı zaten kayıtlı!");
                 return View(model);
             }
+            var aktivasyonKodu = Guid.NewGuid().ToString().Replace("-", "");
             var user = new ApplicationUser()
             {
                 Name = model.Register.Name,
                 Surname = model.Register.Surname,
                 Email = model.Register.Email,
-                UserName = model.Register.Username
+                UserName = model.Register.Username,
+                ActivationCode = aktivasyonKodu
             };
             var sonuc = userManager.Create(user, model.Register.Password);
             if (sonuc.Succeeded)
             {
                 //userManager.AddToRole(user.Id, "Admin");
-                userManager.AddToRole(user.Id, "User");
+                //userManager.AddToRole(user.Id, "User");
+                userManager.AddToRole(user.Id, "Passive");
+
+                await SiteSettings.SendMail(new MailModel()
+                {
+                    Message = $"Merhaba {user.UserName}, </br> Sisteme başarı ile kayıt oldunuz. <br/> Hesabınızı aktifleştirmek için <a href='http://localhost:28442/Account/Activation?code={aktivasyonKodu}'>Aktivasyon Kodu</a>",
+                    Subject = "Hoşgeldiniz",
+                    To = user.Email
+                });
+
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -225,7 +236,7 @@ namespace Emlak.MVC.Controllers
                     foto.SaveAs(dosyayolu);
 
                     WebImage img = new WebImage(dosyayolu);
-                    img.AddTextWatermark("Wissen", "RoyalBlue", opacity: 95,fontSize:25,fontFamily:"Verdana");
+                    img.AddTextWatermark("Wissen", "RoyalBlue", opacity: 95, fontSize: 25, fontFamily: "Verdana");
                     img.Resize(200, 200, false);
                     img.Save(dosyayolu);
 
@@ -264,6 +275,42 @@ namespace Emlak.MVC.Controllers
                 errmessage = "Hata Oluştu"
             }, JsonRequestBehavior.AllowGet);
 
+        }
+
+        public async Task<ActionResult> Activation(string code)
+        {
+            var userStore = MembershipTools.NewUserStore();
+            var userManager = new UserManager<ApplicationUser>(userStore);
+            var sonuc = userStore.Context.Set<ApplicationUser>().Where(x => x.ActivationCode == code).FirstOrDefault();
+            if (sonuc == null)
+            {
+                ViewBag.sonuc = "Kod Aktivasyon Başarısız";
+                return View();
+            }
+            sonuc.EmailConfirmed = true;
+            await userStore.UpdateAsync(sonuc);
+            await userStore.Context.SaveChangesAsync();
+
+            var roleManager = MembershipTools.NewRoleManager();
+            userManager.RemoveFromRole(sonuc.Id, "Passive");
+            userManager.AddToRole(sonuc.Id, "User");
+            ViewBag.sonuc = $"Merhaba, {sonuc.UserName} Aktivasyon Başarılı.";
+            return View();
+        }
+        [Authorize]
+        public async Task<ActionResult> ResendActivation()
+        {
+            var userStore = MembershipTools.NewUserStore();
+            var userManager = new UserManager<ApplicationUser>(userStore);
+            var user = userManager.FindById(HttpContext.User.Identity.GetUserId());
+
+            await SiteSettings.SendMail(new MailModel()
+            {
+                Message = $"Merhaba {user.UserName}, </br> Hesabınızı aktifleştirmek için <a href='http://localhost:28442/Account/Activation?code={user.ActivationCode}'>Aktivasyon Kodu</a>",
+                Subject = "Aktivasyon Kodu",
+                To = user.Email
+            });
+            return RedirectToAction("Profile");
         }
     }
 }
