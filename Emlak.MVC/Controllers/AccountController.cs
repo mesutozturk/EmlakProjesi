@@ -19,6 +19,7 @@ namespace Emlak.MVC.Controllers
 {
     public class AccountController : Controller
     {
+
         // GET: Account
         public ActionResult Register()
         {
@@ -149,9 +150,11 @@ namespace Emlak.MVC.Controllers
                 }
                 var aktvisyonKodu = Guid.NewGuid().ToString().Replace("-", "");
                 user.ActivationCode = aktvisyonKodu;
+                string SiteUrl = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host +
+(Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
                 await SiteSettings.SendMail(new MailModel()
                 {
-                    Message = $"Merhaba {user.UserName}, </br> Sistemi Kullanabilmek için Hesabınız tekrar aktifleştirmeniz gerekiyor. <br/> Hesabınızı aktifleştirmek için <a href='http://localhost:28442/Account/Activation?code={aktvisyonKodu}'>Aktivasyon Kodu</a>"+Server.MachineName,
+                    Message = $"Merhaba {user.UserName}, </br> Sistemi Kullanabilmek için Hesabınız tekrar aktifleştirmeniz gerekiyor. <br/> Hesabınızı aktifleştirmek için <a href='{SiteUrl}/Account/Activation?code={aktvisyonKodu}'>Aktivasyon Kodu</a>",
                     Subject = "Hesabınızı Aktifleştirmeniz Gerekiyor",
                     To = user.Email
                 });
@@ -321,7 +324,7 @@ namespace Emlak.MVC.Controllers
             sonuc.EmailConfirmed = true;
             await userStore.UpdateAsync(sonuc);
             await userStore.Context.SaveChangesAsync();
-            
+
             userManager.RemoveFromRole(sonuc.Id, "Passive");
             if (string.IsNullOrEmpty(sonuc.PreRole))
                 userManager.AddToRole(sonuc.Id, "User");
@@ -334,12 +337,7 @@ namespace Emlak.MVC.Controllers
                 Subject = "Aktivasyon",
                 To = sonuc.Email
             });
-            var authManager = HttpContext.GetOwinContext().Authentication;
-            var userIdentity = await userManager.CreateIdentityAsync(sonuc, DefaultAuthenticationTypes.ApplicationCookie);
-            authManager.SignIn(new AuthenticationProperties()
-            {
-                IsPersistent = true
-            }, userIdentity);
+            HttpContext.GetOwinContext().Authentication.SignOut();
             return View();
         }
         [Authorize]
@@ -348,10 +346,11 @@ namespace Emlak.MVC.Controllers
             var userStore = MembershipTools.NewUserStore();
             var userManager = new UserManager<ApplicationUser>(userStore);
             var user = userManager.FindById(HttpContext.User.Identity.GetUserId());
-
+            string SiteUrl = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host +
+(Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
             await SiteSettings.SendMail(new MailModel()
             {
-                Message = $"Merhaba {user.UserName}, </br> Hesabınızı aktifleştirmek için <a href='http://localhost:28442/Account/Activation?code={user.ActivationCode}'>Aktivasyon Kodu</a>",
+                Message = $"Merhaba {user.UserName}, </br> Hesabınızı aktifleştirmek için <a href='{SiteUrl}/Account/Activation?code={user.ActivationCode}'>Aktivasyon Kodu</a>",
                 Subject = "Aktivasyon Kodu",
                 To = user.Email
             });
