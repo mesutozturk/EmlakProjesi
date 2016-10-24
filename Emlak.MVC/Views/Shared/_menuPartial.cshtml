@@ -13,7 +13,7 @@
                 <li class="navbar__item"><a href="@Url.Action("Index","Home")" class="navbar__link">Ana Sayfa</a></li>
                 <li class="navbar__item js-dropdown">
                     <a class="navbar__link">
-                        Ana Sayfa
+                        Emlak
                         <svg class="navbar__arrow">
                             <use xlink:href="#icon-arrow-right"></use>
                         </svg>
@@ -107,7 +107,7 @@
                                 {
                                     <li class="navbar__subitem">
                                         <a href="@Url.Action("Profile","Account")" class="navbar__sublink js-navbar-sublink">
-                                           @HttpContext.Current.User.Identity.GetUserName() Profili
+                                            @HttpContext.Current.User.Identity.GetUserName() Profili
                                         </a>
                                     </li>
                                     <li class="navbar__subitem">
@@ -134,11 +134,18 @@
                                         </a>
                                     </li>
                                 }
-                                
+
                             </ul>
                         </div>
                     </div>
                 </li>
+
+                @if (HttpContext.Current.User.IsInRole("Admin"))
+                {
+                    <li class="navbar__item">
+                        <a href="@Url.Action("Index","Admin")" class="navbar__link">Yönetim Paneli</a>
+                    </li>
+                }
             </ul>
             <!-- end of block  navbar__nav-->
         </div>

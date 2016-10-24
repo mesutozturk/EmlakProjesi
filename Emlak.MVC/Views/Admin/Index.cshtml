@@ -1,0 +1,10 @@
+﻿
+@{
+    ViewBag.Title = "Yönetim Sayfası";
+    Layout = "~/Views/Shared/_mainLayout.cshtml";
+}
+<div class="container">
+    <h2>Yönetim Sayfası</h2>
+    @{ Html.RenderAction("AdminMenu", "Admin");}
+
+</div>

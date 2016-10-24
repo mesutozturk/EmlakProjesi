@@ -1,0 +1,136 @@
+﻿<div class="center">
+    <ul class="navbar__nav">
+        <li class="navbar__item"><a href="@Url.Action("Index","Home")" class="navbar__link">Ana Sayfa</a></li>
+        <li class="navbar__item js-dropdown">
+            <a class="navbar__link">
+                Emlak
+                <svg class="navbar__arrow">
+                    <use xlink:href="#icon-arrow-right"></use>
+                </svg>
+            </a>
+            <div role="menu" class="js-dropdown-menu navbar__dropdown navbar__dropdown--colls-1">
+                <button class="navbar__back js-navbar-submenu-back">
+                    <svg class="navbar__arrow">
+                        <use xlink:href="#icon-arrow-left"></use>
+                    </svg>Back
+                </button>
+                <div class="navbar__submenu">
+                    <ul class="navbar__subnav">
+                        <li class="navbar__subitem active"><a href="index.html" class="navbar__sublink js-navbar-sublink">Banner & Search</a></li>
+                        <li class="navbar__subitem"><a href="index_slider.html" class="navbar__sublink js-navbar-sublink">Property slider</a></li>
+                        <li class="navbar__subitem"><a href="index_slider_search.html" class="navbar__sublink js-navbar-sublink">Slider & Search</a></li>
+                        <li class="navbar__subitem"><a href="index_slider_auth.html" class="navbar__sublink js-navbar-sublink">Slider & Authorization</a></li>
+                        <li class="navbar__subitem"><a href="index_vmap_light.html" class="navbar__sublink js-navbar-sublink">Google Map & Light search</a></li>
+                        <li class="navbar__subitem"><a href="index_vmap_dark.html" class="navbar__sublink js-navbar-sublink">Google Map & Dark search</a></li>
+                        <li class="navbar__subitem"><a href="index_hmap_light.html" class="navbar__sublink js-navbar-sublink">Google Map & Horizontal search</a></li>
+                        <li class="navbar__subitem"><a href="feature_map_leaflet.html" class="navbar__sublink js-navbar-sublink">Openstreet Map & Filter</a></li>
+                        <li class="navbar__subitem"><a href="feature_vmap_fullscreen.html" class="navbar__sublink js-navbar-sublink">Fullscreen Google Map</a></li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+        <li class="navbar__item js-dropdown">
+            <a class="navbar__link">
+                Realty
+                <svg class="navbar__arrow">
+                    <use xlink:href="#icon-arrow-right"></use>
+                </svg>
+            </a>
+            <div role="menu" class="js-dropdown-menu navbar__dropdown navbar__dropdown--colls-2">
+                <button class="navbar__back js-navbar-submenu-back">
+                    <svg class="navbar__arrow">
+                        <use xlink:href="#icon-arrow-left"></use>
+                    </svg>Back
+                </button>
+                <div class="navbar__submenu">
+                    <h5 class="navbar__subtitle">Details</h5>
+                    <ul class="navbar__subnav">
+                        <li class="navbar__subitem"><a href="property_details.html" class="navbar__sublink js-navbar-sublink">Property</a></li>
+                        <li class="navbar__subitem"><a href="property_details_agent.html" class="navbar__sublink js-navbar-sublink">Property & agent</a></li>
+                    </ul>
+                </div>
+                <div class="navbar__submenu">
+                    <h5 class="navbar__subtitle">Listing</h5>
+                    <ul class="navbar__subnav">
+                        <li class="navbar__subitem navbar__subitem-dropdown js-dropdown">
+                            <a class="navbar__sublink js-navbar-sublink">
+                                Grid
+                                <svg class="navbar__arrow">
+                                    <use xlink:href="#icon-arrow-right"></use>
+                                </svg>
+                            </a>
+                            <div class="navbar__submenu navbar__submenu--level">
+                                <button class="navbar__back js-navbar-submenu-back">
+                                    <svg class="navbar__arrow">
+                                        <use xlink:href="#icon-arrow-left"></use>
+                                    </svg>Back
+                                </button>
+                                <ul class="navbar__subnav">
+                                    <li class="navbar__subitem"><a href="feature_grid_large.html" class="navbar__sublink js-navbar-sub-sublink">Large</a></li>
+                                    <li class="navbar__subitem"><a href="properties_listing_grid.html" class="navbar__sublink js-navbar-sub-sublink">Medium</a></li>
+                                    <li class="navbar__subitem"><a href="feature_grid_small.html" class="navbar__sublink js-navbar-sub-sublink">Small</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="navbar__subitem"><a href="properties_listing.html" class="navbar__sublink js-navbar-sublink">List</a></li>
+                        <li class="navbar__subitem"><a href="properties_listing_empty.html" class="navbar__sublink js-navbar-sublink">Empty</a></li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+        <li class="navbar__item js-dropdown">
+            <a class="navbar__link">
+                Hesap
+                <svg class="navbar__arrow">
+                    <use xlink:href="#icon-arrow-right"></use>
+                </svg>
+            </a>
+            <div role="menu" class="js-dropdown-menu navbar__dropdown">
+                <button class="navbar__back js-navbar-submenu-back">
+                    <svg class="navbar__arrow">
+                        <use xlink:href="#icon-arrow-left"></use>
+                    </svg>Back
+                </button>
+                <div class="navbar__submenu">
+                    <ul class="navbar__subnav">
+                        @if (HttpContext.Current.User.Identity.IsAuthenticated)
+                        {
+                            <li class="navbar__subitem">
+                                <a href="@Url.Action("Profile","Account")" class="navbar__sublink js-navbar-sublink">
+                                    @HttpContext.Current.User.Identity.GetUserName() Profili
+                                </a>
+                            </li>
+                            <li class="navbar__subitem">
+                                <a href="@Url.Action("Logout","Account")" class="navbar__sublink js-navbar-sublink">
+                                    Çıkış Yap
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="navbar__subitem">
+                                <a href="@Url.Action("Login","Account")" class="navbar__sublink js-navbar-sublink">
+                                    Giriş Yap
+                                </a>
+                            </li>
+                            <li class="navbar__subitem">
+                                <a href="@Url.Action("Register","Account")" class="navbar__sublink js-navbar-sublink">
+                                    Kayıt Ol
+                                </a>
+                            </li>
+                            <li class="navbar__subitem">
+                                <a href="@Url.Action("RecoverPassword","Account")" class="navbar__sublink js-navbar-sublink">
+                                    Şifremi Unuttum
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        </li>
+        <li class="navbar__item">
+            <a href="@Url.Action("Index","Admin")" class="navbar__link">Yönetim Paneli</a>
+        </li>
+    </ul>
+</div>
