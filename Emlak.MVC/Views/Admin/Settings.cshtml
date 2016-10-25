@@ -31,13 +31,13 @@
                                 foreach (var item in Model.IlanTurleri)
                                 {
                                     sayac++;
-                                    <tr>
-                                        <td>@sayac</td>
-                                        <td>@item.Ad </td>
-                                        <td>
-                                            <input type="button" class="btn btn-sm btn-warning guncelle" value="Güncelle" name="@item.ID" />
-                                        </td>
-                                    </tr>
+                            <tr>
+                                <td>@sayac</td>
+                                <td>@item.Ad </td>
+                                <td>
+                                    <input type="button" class="btn btn-sm btn-warning guncelle" value="Güncelle" name="@item.ID" />
+                                </td>
+                            </tr>
                                 }
                             }
                         </tbody>
@@ -74,13 +74,13 @@
                                 foreach (var item in Model.KatTurleri)
                                 {
                                     sayac2++;
-                                    <tr>
-                                        <td>@sayac2</td>
-                                        <td>@item.Tur </td>
-                                        <td>
-                                            <input type="button" class="btn btn-sm btn-warning katguncelle" value="Güncelle" name="@item.ID" />
-                                        </td>
-                                    </tr>
+                            <tr>
+                                <td>@sayac2</td>
+                                <td>@item.Tur </td>
+                                <td>
+                                    <input type="button" class="btn btn-sm btn-warning katguncelle" value="Güncelle" name="@item.ID" />
+                                </td>
+                            </tr>
                                 }
                             }
                         </tbody>
@@ -118,13 +118,13 @@
                                 foreach (var item in Model.IsitmaTurleri)
                                 {
                                     sayac3++;
-                                    <tr>
-                                        <td>@sayac3</td>
-                                        <td>@item.Ad </td>
-                                        <td>
-                                            <input type="button" class="btn btn-sm btn-warning isitmaguncelle" value="Güncelle" name="@item.ID" />
-                                        </td>
-                                    </tr>
+                            <tr>
+                                <td>@sayac3</td>
+                                <td>@item.Ad </td>
+                                <td>
+                                    <input type="button" class="btn btn-sm btn-warning isitmaguncelle" value="Güncelle" name="@item.ID" />
+                                </td>
+                            </tr>
                                 }
                             }
                         </tbody>
@@ -142,3 +142,174 @@
         </div>
     </div>
 </div>
+<script>
+    $("#btnilanturuekle").click(function () {
+        var ilanturuadi = $("#txtilan").val();
+        console.log(ilanturuadi);
+        if (ilanturuadi.length == 0)
+            return;
+        $.ajax({
+            url: '@Url.Action("YeniIlanTuru","Admin")?ilanturuadi=' + ilanturuadi,
+            type: 'POST',
+            success: function (response) {
+                if (response.success == true) {
+                    window.location.href = '@Url.Action("Settings","Admin")';
+                }
+                else {
+                    alert(response.message);
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    });
+    $("#btnkatturuekle").click(function () {
+        var kattur = $("#txtkat").val();
+        if (kattur.length == 0)
+            return;
+        $.ajax({
+            url: '@Url.Action("YeniKatTuru","Admin")?katturuadi=' + kattur,
+            type: 'POST',
+            success: function (data) {
+                if (data.success == true) {
+                    window.location.href = '@Url.Action("settings","admin")';
+                    alert(data.message);
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    });
+    $("#btnisitmaturuekle").click(function () {
+        var isitmatur = $("#txtisitma").val();
+        if (isitmatur.length == 0)
+            return;
+        $.ajax({
+            url: '@Url.Action("YeniIsitmaTuru","Admin")?isitmaturuadi=' + isitmatur,
+            type: 'POST',
+            success: function (data) {
+                if (data.success == true) {
+                    window.location.href = '@Url.Action("settings","admin")';
+                    alert(data.message);
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    });
+    var ilanturuid = 0;
+    $(".guncelle").click(function () {
+        $("#btnilanguncelle").removeClass("hidden");
+        $("#btnilanturuekle").addClass("hidden");
+        ilanturuid = this.name;
+        $.ajax({
+            url: '@Url.Action("IlanTuruGetir","Admin")/' + ilanturuid,
+            type: "GET",
+            success: function (data) {
+                if (data.success == true) {
+                    $("#txtilan").val(data.message);
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    });
+    $("#btnilanguncelle").click(function () {
+        var guncellenecekIlanTuruAdi = $("#txtilan").val();
+        $.ajax({
+            url: '@Url.Action("Ilanguncelle","Admin")?ilanid=' + ilanturuid + '&ad=' + guncellenecekIlanTuruAdi,
+            type: 'POST',
+            success: function (data) {
+                if (data.success == true) {
+                    window.location.href = '@Url.Action("settings","admin")';
+                    alert(data.message);
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    });
+    var katturid = 0;
+    $(".katguncelle").click(function () {
+        $("#btnkatturuguncelle").removeClass("hidden");
+        $("#btnkatturuekle").addClass("hidden");
+        katturid = this.name;
+        $.ajax({
+            url: '@Url.Action("KatTuruGetir","Admin")/' + katturid,
+            type: "GET",
+            success: function (data) {
+                if (data.success == true) {
+                    $("#txtkat").val(data.message);
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    });
+    $("#btnkatturuguncelle").click(function () {
+        var guncellenecekkatTuruAdi = $("#txtkat").val();
+        $.ajax({
+            url: '@Url.Action("KatturuGuncelle","Admin")?katturid=' + katturid + '&ad=' + guncellenecekkatTuruAdi,
+            type: 'POST',
+            success: function (data) {
+                if (data.success == true) {
+                    window.location.href = '@Url.Action("settings","admin")';
+                    alert(data.message);
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    });
+    var isitmaturid = 0;
+    $(".isitmaguncelle").click(function () {
+        $("#btnisitmaturuguncelle").removeClass("hidden");
+        $("#btnisitmaturuekle").addClass("hidden");
+        isitmaturid = this.name;
+        $.ajax({
+            url: '@Url.Action("IsitmaTuruGetir","Admin")/' + isitmaturid,
+            type: "GET",
+            success: function (data) {
+                if (data.success == true) {
+                    $("#txtisitma").val(data.message);
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    });
+    $("#btnisitmaturuguncelle").click(function () {
+        var guncellenecekisitmaTuruAdi = $("#txtisitma").val();
+        $.ajax({
+            url: '@Url.Action("IsitmaTuruGuncelle", "Admin")?isitmaturid=' + isitmaturid + '&ad=' + guncellenecekisitmaTuruAdi,
+            type: 'POST',
+            success: function (data) {
+                if (data.success == true) {
+                    window.location.href = '@Url.Action("settings","admin")';
+                    alert(data.message);
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    });
+</script>
