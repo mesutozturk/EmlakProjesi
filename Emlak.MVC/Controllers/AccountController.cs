@@ -270,8 +270,8 @@ namespace Emlak.MVC.Controllers
                     foto.SaveAs(dosyayolu);
 
                     WebImage img = new WebImage(dosyayolu);
-                    img.AddTextWatermark("Wissen", "RoyalBlue", opacity: 95, fontSize: 25, fontFamily: "Verdana");
                     img.Resize(200, 200, false);
+                    img.AddTextWatermark("Wissen", "RoyalBlue", opacity: 95, fontSize: 25, fontFamily: "Verdana");
                     img.Save(dosyayolu);
 
 
