@@ -122,7 +122,7 @@ else
                         <h3 class="worker__name">
                             @{
                                 var user = MembershipTools.NewUserManager().FindById(HttpContext.Current.User.Identity.GetUserId());
-                                var nophoto = "../img/noprofile.png";
+                                var nophoto = "img/noprofile.png";
                             }
                             @user.Name @user.Surname
                         </h3>
@@ -130,11 +130,11 @@ else
                             <div class="worker__avatar">
                                 @if (string.IsNullOrEmpty(user.AvatarPath))
                                 {
-                                    <img src="@nophoto"  class="img-responsive img-rounded useravatar" style="margin: 0 auto" />
+                                    <img src="~/@nophoto"  class="img-responsive img-rounded useravatar" style="margin: 0 auto" />
                                 }
                                 else
                                 {
-                                    <img src="@user.AvatarPath" class="img-responsive img-rounded useravatar" style="margin: 0 auto" />
+                                    <img src="~/@user.AvatarPath" class="img-responsive img-rounded useravatar" style="margin: 0 auto" />
                                 }
                             </div>
                         </div>

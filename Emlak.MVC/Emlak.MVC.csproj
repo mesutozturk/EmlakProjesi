@@ -949,6 +949,7 @@
     <Content Include="Views\Admin\IlanYonetimi.cshtml" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Views\Admin\IlanDetay.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -960,7 +961,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Upload\Avatars\" />
-    <Folder Include="Views\Emlak\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Emlak.BLL\Emlak.BLL.csproj">

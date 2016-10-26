@@ -1,9 +1,11 @@
 ﻿using Emlak.BLL.Repository;
+using Emlak.BLL.Settings;
 using Emlak.Entity.Entities;
 using Emlak.Entity.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -68,8 +70,110 @@ namespace Emlak.MVC.Controllers
 
             return View(ilanlar);
         }
+        public ActionResult IlanDetay(int? id)
+        {
+            var ilanturleri = new List<SelectListItem>();
+            var katturleri = new List<SelectListItem>();
+            var isinmaturleri = new List<SelectListItem>();
+            new IlanTuruRepo().GetAll().OrderBy(x => x.Ad).ToList().ForEach(x =>
+            ilanturleri.Add(new SelectListItem()
+            {
+                Text = x.Ad,
+                Value = x.ID.ToString()
+            }));
+            new KatTurRepo().GetAll().ForEach(x => katturleri.Add(new SelectListItem
+            {
+                Text = x.Tur,
+                Value = x.ID.ToString()
+            }));
+            new IsitmaSistemiRepo().GetAll().ForEach(x => isinmaturleri.Add(new SelectListItem
+            {
+                Text = x.Ad,
+                Value = x.ID.ToString()
+            }));
+            ViewBag.ilanturleri = ilanturleri;
+            ViewBag.katturleri = katturleri;
+            ViewBag.isinmaturleri = isinmaturleri;
 
+            if (id == null)
+                return RedirectToAction("IlanYonetimi");
+            var ilan = new KonutRepo().GetByID(id.Value);
+            if (ilan == null)
+                return RedirectToAction("IlanYonetimi");
 
+            var model = new KonutViewModel()
+            {
+                Aciklama = ilan.Aciklama,
+                Baslik = ilan.Baslik,
+                EklenmeTarihi = ilan.EklenmeTarihi,
+                Adres = ilan.Adres,
+                BinaYasi = ilan.BinaYasi,
+                Boylam = ilan.Boylam,
+                FotografYollari = ilan.Fotograflar.Select(f => f.Yol).ToList(),
+                Enlem = ilan.Enlem,
+                Fiyat = ilan.Fiyat,
+                IlanTuruID = ilan.IlanTuruID,
+                IsitmaTuruID = ilan.IsitmaSistemiID,
+                ID = ilan.ID,
+                KatTuruID = ilan.KatturID,
+                KullaniciID = ilan.KullaniciID,
+                Metrekare = ilan.Metrekare,
+                OdaSayisi = ilan.OdaSayisi,
+                OnaylanmaTarihi = ilan.OnaylanmaTarihi,
+                YayindaMi = ilan.YayindaMi
+            };
+            return View(model);
+        }
+        [HttpPost, ValidateInput(false)]
+        public async Task<ActionResult> IlanDuzenle(KonutViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("IlanYonetimi");
+            }
+
+            var konut = new KonutRepo().GetByID(model.ID);
+            #region Kullanıcı Bilgilendirme
+            string SiteUrl = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host +
+(Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+            if (konut.YayindaMi == true && model.YayindaMi == false)
+            {
+                await SiteSettings.SendMail(new MailModel()
+                {
+                    Message = $"Merhaba {konut.Sahibi.Name}<br/><strong>'{konut.ID}'</strong> nolu ilanınız yayından kaldırılmıştır<br/><a href='{SiteUrl}/Ilan/IlanDetay/{konut.ID}'>İlanınız görmek için tıklayınız</a>",
+                    Subject = "İlanınız yayından kaldırıldı",
+                    To = konut.Sahibi.Email
+                });
+            }
+            else if(konut.YayindaMi == false && model.YayindaMi == true)
+            {
+                konut.OnaylanmaTarihi = DateTime.Now;
+                await SiteSettings.SendMail(new MailModel()
+                {
+                    Message = $"Merhaba {konut.Sahibi.Name}<br/><strong>'{konut.ID}'</strong> nolu ilanınız yayına başlamıştır<br/><a href='{SiteUrl}/Ilan/Detay/{konut.ID}'>İlanınız görmek için tıklayınız</a>",
+                    Subject = "İlanınız Yayında!",
+                    To = konut.Sahibi.Email
+                });
+            }
+            #endregion
+
+            konut.Aciklama = model.Aciklama;
+            konut.Adres = model.Adres;
+            konut.Baslik = model.Baslik;
+            konut.BinaYasi = model.BinaYasi;
+            konut.Boylam = model.Boylam;
+            konut.Enlem = model.Enlem;
+            konut.Fiyat = model.Fiyat;
+            konut.IlanTuruID = model.IlanTuruID;
+            konut.IsitmaSistemiID = model.IsitmaTuruID;
+            konut.KatturID = model.KatTuruID;
+            konut.Metrekare = model.Metrekare;
+            konut.OdaSayisi = model.OdaSayisi;
+            konut.YayindaMi = model.YayindaMi;
+            new KonutRepo().Update();
+
+            return RedirectToAction("IlanDetay", new { id = konut.ID });
+        }
         #region JsonResults
         [HttpPost]
         public JsonResult YeniIlanTuru(string ilanturuadi)
@@ -324,6 +428,33 @@ namespace Emlak.MVC.Controllers
                 {
                     success = false,
                     message = $"Güncelleme Başarısız:> {ex.Message}"
+                }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        public JsonResult Resimsil(List<string> values)
+        {
+            try
+            {
+                values.ForEach(path =>
+                    {
+                        var yol = path.Substring(1);
+                        var foto = new FotografRepo().GetAll().Where(x => x.Yol == yol).FirstOrDefault();
+                        new FotografRepo().Delete(foto);
+                        System.IO.File.Delete(Server.MapPath(path));
+                    });
+                return Json(new
+                {
+                    success = true,
+                    message = "Seçili Resimler Silindi"
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = $"Resim Silme İşleminde Hata Var => {ex.Message}"
                 }, JsonRequestBehavior.AllowGet);
             }
         }

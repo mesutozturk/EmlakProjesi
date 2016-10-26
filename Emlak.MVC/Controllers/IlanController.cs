@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
@@ -59,7 +60,7 @@ namespace Emlak.MVC.Controllers
         }
         [HttpPost, ValidateInput(false)]
         [Authorize]
-        public ActionResult Ekle(KonutViewModel model)
+        public async Task<ActionResult> Ekle(KonutViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -111,7 +112,29 @@ namespace Emlak.MVC.Controllers
                     }
                 });
             }
+            string SiteUrl = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host +
+(Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
 
+            var roleManager = MembershipTools.NewRoleManager();
+            var users = roleManager.FindByName("Admin").Users;
+
+            var userManager = MembershipTools.NewUserManager();
+            List<string> mailler = new List<string>();
+
+            foreach (var item in users)
+            {
+                mailler.Add(userManager.FindById(item.UserId).Email);
+            }
+
+            foreach (var mail in mailler)
+            {
+                await SiteSettings.SendMail(new MailModel
+                {
+                    Subject = "Yeni İlan Eklendi",
+                    Message = $"Sayın Admin,<br/>Sitenize bir ilan eklendi, siz de bi zahmet onaylayın.<br/><a href='{SiteUrl}/Admin/IlanDetay/{yeniKonut.ID}'>Haydi Onayla</a><p>İyi Çalışmalar<br/>Sitenin Nöbetçisi</p>",
+                    To = mail
+                });
+            }
             return RedirectToAction("Index", "Home");
         }
 
