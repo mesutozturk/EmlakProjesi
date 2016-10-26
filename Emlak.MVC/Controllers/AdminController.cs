@@ -13,6 +13,7 @@ namespace Emlak.MVC.Controllers
     public class AdminController : Controller
     {
         // GET: Admin
+        //[AllowAnonymous]
         public ActionResult Index()
         {
             return View();
@@ -40,6 +41,34 @@ namespace Emlak.MVC.Controllers
             };
             return View(model);
         }
+        public ActionResult IlanYonetimi()
+        {
+            List<KonutViewModel> ilanlar = new KonutRepo().GetAll().OrderByDescending(x => x.EklenmeTarihi).Select(x =>
+            new KonutViewModel()
+            {
+                Aciklama = x.Aciklama,
+                YayindaMi = x.YayindaMi,
+                Adres = x.Adres,
+                Baslik = x.Baslik,
+                BinaYasi = x.BinaYasi,
+                Boylam = x.Boylam,
+                EklenmeTarihi = x.EklenmeTarihi,
+                Enlem = x.Enlem,
+                Fiyat = x.Fiyat,
+                FotografYollari = (x.Fotograflar.Count > 0 ? x.Fotograflar.Select(y => y.Yol).ToList() : new List<string>()),
+                ID = x.ID,
+                IlanTuruID = x.IlanTuruID,
+                IsitmaTuruID = x.IsitmaSistemiID,
+                KatTuruID = x.KatturID,
+                KullaniciID = x.KullaniciID,
+                Metrekare = x.Metrekare,
+                OdaSayisi = x.OdaSayisi,
+                OnaylanmaTarihi = x.OnaylanmaTarihi
+            }).ToList();
+
+            return View(ilanlar);
+        }
+
 
         #region JsonResults
         [HttpPost]
@@ -299,8 +328,6 @@ namespace Emlak.MVC.Controllers
             }
         }
         #endregion
-
-
         #region PartialViews
         public PartialViewResult AdminMenu()
         {

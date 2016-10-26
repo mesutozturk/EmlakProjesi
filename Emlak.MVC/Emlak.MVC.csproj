@@ -493,7 +493,13 @@
     <Content Include="assets\media-demo\workers\worker-4.jpg" />
     <Content Include="Content\jquery.drag-n-crop.css" />
     <Content Include="Global.asax" />
+    <Content Include="img\nofoto.jpg" />
     <Content Include="img\noprofile.png" />
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <Content Include="Script\app.js" />
     <Content Include="Script\ckeditor\adapters\jquery.js" />
     <Content Include="Script\ckeditor\build-config.js" />
@@ -940,6 +946,9 @@
     <Content Include="Script\ckeditor\samples\toolbarconfigurator\font\fontello.woff" />
     <Content Include="Script\ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
     <Content Include="Script\ckeditor\skins\moono\readme.md" />
+    <Content Include="Views\Admin\IlanYonetimi.cshtml" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

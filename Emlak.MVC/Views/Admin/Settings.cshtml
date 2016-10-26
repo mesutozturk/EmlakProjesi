@@ -3,6 +3,7 @@
     ViewBag.Title = "Site Ayarları";
     Layout = "~/Views/Shared/_mainLayout.cshtml";
 }
+
 <div class="container">
     @{ Html.RenderAction("AdminMenu", "Admin");}
     <div class="row">
@@ -142,6 +143,7 @@
         </div>
     </div>
 </div>
+<script src="~/Scripts/jquery-3.1.1.js"></script>
 <script>
     $("#btnilanturuekle").click(function () {
         var ilanturuadi = $("#txtilan").val();

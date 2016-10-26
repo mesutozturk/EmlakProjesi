@@ -114,5 +114,7 @@ namespace Emlak.MVC.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+
     }
 }
