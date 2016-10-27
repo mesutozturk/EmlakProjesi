@@ -51,17 +51,27 @@ namespace Emlak.MVC.Controllers
             if (sonuc.Succeeded)
             {
                 if (userManager.Users.ToList().Count == 0)
+                {
                     userManager.AddToRole(user.Id, "Admin");
+                    await SiteSettings.SendMail(new MailModel()
+                    {
+                        Message = $"Merhaba {user.UserName}, </br> Sisteme Admin rolünde kayıt oldunuz. <br/><a href='http://localhost:28442/Account/Profile'>Profil Sayfanız</a>",
+                        Subject = "Hoşgeldiniz",
+                        To = user.Email
+                    });
+                }
                 else
+                {
                     //userManager.AddToRole(user.Id, "User");
                     userManager.AddToRole(user.Id, "Passive");
-
-                await SiteSettings.SendMail(new MailModel()
-                {
-                    Message = $"Merhaba {user.UserName}, </br> Sisteme başarı ile kayıt oldunuz. <br/> Hesabınızı aktifleştirmek için <a href='http://localhost:28442/Account/Activation?code={aktivasyonKodu}'>Aktivasyon Kodu</a>",
-                    Subject = "Hoşgeldiniz",
-                    To = user.Email
-                });
+                    await SiteSettings.SendMail(new MailModel()
+                    {
+                        Message = $"Merhaba {user.UserName}, </br> Sisteme başarı ile kayıt oldunuz. <br/> Hesabınızı aktifleştirmek için <a href='http://localhost:28442/Account/Activation?code={aktivasyonKodu}'>Aktivasyon Kodu</a>",
+                        Subject = "Hoşgeldiniz",
+                        To = user.Email
+                    });
+                }
+                
 
                 return RedirectToAction("Index", "Home");
             }
