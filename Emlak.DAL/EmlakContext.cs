@@ -21,5 +21,6 @@ namespace Emlak.DAL
         public virtual DbSet<IlanTuru> IlanTurleri{ get; set; }
         public virtual DbSet<IsitmaSistemi> IsitmaSistemleri { get; set; }
         public virtual DbSet<Kattur> KatTurleri { get; set; }
+        public virtual DbSet<IlanBilgilendirme> IlanBilgilendirmeler { get; set; }
     }
 }

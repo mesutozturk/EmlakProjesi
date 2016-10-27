@@ -45,5 +45,6 @@ namespace Emlak.Entity.Entities
         [ForeignKey("IlanTuruID")]
         public virtual IlanTuru IlanTuru { get; set; }
         public virtual List<Fotograf> Fotograflar { get; set; } = new List<Fotograf>();
+        public virtual List<IlanBilgilendirme> Bilgilendirmeler { get; set; } = new List<IlanBilgilendirme>();
     }
 }

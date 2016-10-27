@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Fotograf.cs" />
+    <Compile Include="Entities\IlanBilgilendirme.cs" />
     <Compile Include="Entities\IlanTuru.cs" />
     <Compile Include="Entities\IsitmaSistemi.cs" />
     <Compile Include="Entities\Kattur.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="IdentityModels\ApplicationRole.cs" />
     <Compile Include="IdentityModels\ApplicationUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\BilgilendirmeViewModel.cs" />
     <Compile Include="ViewModels\KonutViewModel.cs" />
     <Compile Include="ViewModels\LoginAndRegisterViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />

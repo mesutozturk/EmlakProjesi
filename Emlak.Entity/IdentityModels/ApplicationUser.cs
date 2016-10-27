@@ -22,5 +22,6 @@ namespace Emlak.Entity.IdentityModels
         public string ActivationCode { get; set; }
         public string PreRole { get; set; }
         public virtual List<Konut> Konutlar { get; set; } = new List<Konut>();
+        public virtual List<IlanBilgilendirme> Bilgilendirmeler { get; set; } = new List<IlanBilgilendirme>();
     }
 }

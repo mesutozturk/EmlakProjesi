@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace Emlak.MVC.Controllers
 {
@@ -120,7 +121,16 @@ namespace Emlak.MVC.Controllers
                 Metrekare = ilan.Metrekare,
                 OdaSayisi = ilan.OdaSayisi,
                 OnaylanmaTarihi = ilan.OnaylanmaTarihi,
-                YayindaMi = ilan.YayindaMi
+                YayindaMi = ilan.YayindaMi,
+                Bilgilendirmeler = new BilgilendirmeRepo().GetAll().Where(x => x.KonutID == ilan.ID).Select(b => new BilgilendirmeViewModel()
+                {
+                    ID = b.ID,
+                    Aciklama = b.Aciklama,
+                    AciklamaZamani = b.AciklamaZamani,
+                    KonutID = b.KonutID,
+                    OlumluMu = b.OlumluMu,
+                    YoneticiID = b.YoneticiID
+                }).ToList()
             };
             return View(model);
         }
@@ -133,25 +143,50 @@ namespace Emlak.MVC.Controllers
             }
 
             var konut = new KonutRepo().GetByID(model.ID);
+            IlanBilgilendirme bilgilendirme = new IlanBilgilendirme()
+            {
+                Aciklama = model.BilgilendirmeAciklamasi,
+                KonutID = model.ID,
+                OlumluMu = model.OlumluMu,
+                YoneticiID = HttpContext.User.Identity.GetUserId()
+            };
+            bool aciklamaVarMi = false;
+            if (!string.IsNullOrEmpty(model.BilgilendirmeAciklamasi))
+            {
+                konut.Bilgilendirmeler.Add(bilgilendirme);
+                aciklamaVarMi = true;
+            }
+            
             #region Kullanıcı Bilgilendirme
+
             string SiteUrl = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host +
 (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+
             if (konut.YayindaMi == true && model.YayindaMi == false)
             {
                 await SiteSettings.SendMail(new MailModel()
                 {
-                    Message = $"Merhaba {konut.Sahibi.Name}<br/><strong>'{konut.ID}'</strong> nolu ilanınız yayından kaldırılmıştır<br/><a href='{SiteUrl}/Ilan/IlanDetay/{konut.ID}'>İlanınız görmek için tıklayınız</a>",
+                    Message = $"Merhaba {konut.Sahibi.Name}<br/><strong>'{konut.ID}'</strong> nolu ilanınız yayından kaldırılmıştır<br/><p>Sebep: <em>{model.BilgilendirmeAciklamasi}</em></p><a href='{SiteUrl}/Ilan/IlanDetay/{konut.ID}'>İlanınız görmek ve düzenlemek için tıklayınız</a>",
                     Subject = "İlanınız yayından kaldırıldı",
                     To = konut.Sahibi.Email
                 });
             }
-            else if(konut.YayindaMi == false && model.YayindaMi == true)
+            else if (konut.YayindaMi == false && model.YayindaMi == true)
             {
                 konut.OnaylanmaTarihi = DateTime.Now;
                 await SiteSettings.SendMail(new MailModel()
                 {
-                    Message = $"Merhaba {konut.Sahibi.Name}<br/><strong>'{konut.ID}'</strong> nolu ilanınız yayına başlamıştır<br/><a href='{SiteUrl}/Ilan/Detay/{konut.ID}'>İlanınız görmek için tıklayınız</a>",
+                    Message = $"Merhaba {konut.Sahibi.Name}<br/><strong>'{konut.ID}'</strong> nolu ilanınız yayına başlamıştır<br/><p><em>{model.BilgilendirmeAciklamasi}</em></p><a href='{SiteUrl}/Ilan/Detay/{konut.ID}'>İlanınız görmek için tıklayınız</a>",
                     Subject = "İlanınız Yayında!",
+                    To = konut.Sahibi.Email
+                });
+            }
+            else if (aciklamaVarMi)
+            {
+                await SiteSettings.SendMail(new MailModel()
+                {
+                    Message = $"Merhaba {konut.Sahibi.Name}<br/><strong>'{konut.ID}'</strong> nolu ilanınız için bir bildirim var<br/><p>Bildirim: <em>{model.BilgilendirmeAciklamasi}</em></p><a href='{SiteUrl}/Ilan/IlanDetay/{konut.ID}'>İlanınız görmek ve düzenlemek için tıklayınız</a>",
+                    Subject = "İlanınız için yeni bir bildirim var",
                     To = konut.Sahibi.Email
                 });
             }

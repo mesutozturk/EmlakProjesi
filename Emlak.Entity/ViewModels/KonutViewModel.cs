@@ -31,6 +31,7 @@ namespace Emlak.Entity.ViewModels
         public int IsitmaTuruID { get; set; }
         [Display(Name = "İlan Türü")]
         public int IlanTuruID { get; set; }
+        [Display(Name ="Yayında Mı")]
         public bool YayindaMi { get; set; }
         [StringLength(66)]
         [Display(Name = "Başlık")]
@@ -39,5 +40,14 @@ namespace Emlak.Entity.ViewModels
         public DateTime? OnaylanmaTarihi { get; set; }
         public List<string> FotografYollari { get; set; }
         public List<HttpPostedFileBase> Dosyalar { get; set; }
+
+        [Required]
+        [Display(Name = "Bilgilendirme Açıklaması")]
+        public string BilgilendirmeAciklamasi { get; set; }
+        [Required]
+        [Display(Name = "Olumlu Mu")]
+        public bool OlumluMu { get; set; }
+
+        public List<BilgilendirmeViewModel> Bilgilendirmeler { get; set; } = new List<BilgilendirmeViewModel>();
     }
 }

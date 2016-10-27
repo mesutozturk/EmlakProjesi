@@ -12,4 +12,5 @@ namespace Emlak.BLL.Repository
     public class IlanTuruRepo : RepositoryBase<IlanTuru, int> { }
     public class KatTurRepo : RepositoryBase<Kattur, int> { }
     public class IsitmaSistemiRepo : RepositoryBase<IsitmaSistemi, int> { }
+    public class BilgilendirmeRepo : RepositoryBase<IlanBilgilendirme, int> { }
 }
