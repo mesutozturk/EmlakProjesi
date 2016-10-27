@@ -1,0 +1,250 @@
+﻿@model KonutViewModel
+@{
+    ViewBag.Title = "İlan Düzenleme";
+    Layout = "~/Views/Shared/_mainLayout.cshtml";
+}
+<script src="~/Script/ckeditor/ckeditor.js"></script>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            @Html.ValidationSummary()
+            @using (Html.BeginForm("IlanDuzenle", "Ilan", FormMethod.Post, new
+            {
+                @class = "form-horizontal",
+                enctype = "multipart/form-data"
+            }))
+            {
+                @Html.HiddenFor(x => x.ID)
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Baslik, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(x => x.Baslik, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Fiyat, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(x => x.Fiyat, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Adres, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(x => x.Adres, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.IlanTuruID, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.DropDownListFor(x => x.IlanTuruID, (List<SelectListItem>)ViewBag.ilanturleri, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.KatTuruID, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.DropDownListFor(x => x.KatTuruID, (List<SelectListItem>)ViewBag.katturleri, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.IsitmaTuruID, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.DropDownListFor(x => x.IsitmaTuruID, (List<SelectListItem>)ViewBag.isinmaturleri, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.OdaSayisi, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(x => x.OdaSayisi, new { @class = "form-control", type = "number" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.BinaYasi, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(x => x.BinaYasi, new { @class = "form-control", type = "number" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Metrekare, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(x => x.Metrekare, new { @class = "form-control", type = "number" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Aciklama, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.TextAreaFor(x => x.Aciklama, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Enlem, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(x => x.Enlem, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Boylam, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(x => x.Boylam, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="galeri" class="control-label">Fotoğraflar</label>
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(x => x.Dosyalar, new { multiple = "multiple", @class = "form-control", type = "file" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.YayindaMi, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.CheckBoxFor(x => x.YayindaMi, new { disabled = "disabled" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-success">İlanı Güncelle</button>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div id="harita"></div>
+                <input type="button" id="btnkonum" value="Konum Getir" class="btn btn-primary" />
+            </div>
+            <div class="row">
+                @if (Model.FotografYollari.Count == 0)
+                {
+                    <h3 class="text-center text-danger">
+                        Galeride Fotoğraf Yok
+                    </h3>
+                }
+                else
+                {
+                    <div class="center-block">
+                        @foreach (var path in Model.FotografYollari)
+                        {
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6">
+                                    <label class="btn btn-primary">
+                                        <img src="~/@path" alt="..." class="img-thumbnail img-check">
+                                        <input type="checkbox" name="chk1" id="item4" value="val1" class="hidden" autocomplete="off">
+                                    </label>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <input type="button" class="btn btn-block btn-warning" value="Seçili Resimleri Sil" id="btnresimsil" />
+                }
+                @if (Model.Bilgilendirmeler.Count > 0)
+                {
+                    <div class="center-block warning">
+                        <ul class="list-group">
+                            @for (int i = 0; i < Model.Bilgilendirmeler.Count; i++)
+                            {
+                                var userName = MembershipTools.NewUserManager().FindById(Model.Bilgilendirmeler[i].YoneticiID).UserName;
+                                <li class="list-group-item">
+                                    <span class="@(Model.Bilgilendirmeler[i].OlumluMu?"success":"danger")">
+                                        @Model.Bilgilendirmeler[i].Aciklama <br />Yazan: @userName<br />
+                                        @($"{Model.Bilgilendirmeler[i].AciklamaZamani:dd-MM-yy hh:mm}")
+                                    </span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.1.1.js"></script>
+
+<script>
+    $("#btnkonum").click(function () {
+        navigator.geolocation.getCurrentPosition(koordinat);
+    });
+    function koordinat(position) {
+        var enlem = $("#Enlem").val();
+        var boylam = $("#Boylam").val();
+        var enlemboylam = new google.maps.LatLng(enlem, boylam);
+        var ayar = {
+            center: enlemboylam,
+            zoom: 15,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            mapTypeControl: true,
+            navigationControlOptions: { style: google.maps.NavigationControlStyle.SMALL }
+        };
+        var haritatutucu = document.getElementById("harita");
+        var googleHarita = new google.maps.Map(haritatutucu, ayar);
+        var imlec = new google.maps.Marker({
+            position: enlemboylam,
+            map: googleHarita,
+            title: "Konumunuz"
+        });
+        googleHarita.addListener("click", function () {
+            imlec.setMap(null);
+        });
+        googleHarita.addListener("click", function (e) {
+            placeMarkerAndPanTo(e.latLng, googleHarita);
+        });
+        function placeMarkerAndPanTo(latLng, map) {
+            imlec = new google.maps.Marker({
+                position: latLng,
+                map: map
+            });
+            $("#Enlem").val(latLng.lat());
+            $("#Boylam").val(latLng.lng());
+        };
+    };
+    function init() {
+        navigator.geolocation.getCurrentPosition(koordinat);
+    };
+    init();
+    $(document).ready(function (e) {
+        $(".img-check").click(function () {
+            $(this).toggleClass("check");
+        });
+    });
+    var resimler = {};
+    $("#btnresimsil").click(function () {
+        resimler = $(".check");
+        var yollar = [];
+        for (var i = 0; i < resimler.length; i++) {
+            yollar.push($(resimler[i]).attr("src"));
+        }
+        var postData = {
+            values: yollar
+        };
+        $.ajax({
+            url: '@Url.Action("Resimsil","Ilan")',
+            data: postData,
+            dataType: 'JSON',
+            type: 'POST',
+            success: function (data) {
+                window.location.href = '@Url.Action("IlanDetay","Ilan",new { id=Model.ID})';
+                alert(data.message);
+            },
+            error: function (err) {
+                alert("errör");
+                console.log(err);
+            }
+        })
+    });
+
+
+    CKEDITOR.replace("Aciklama", {
+        uiColor: '#fc7f7f'
+    });
+</script>
+<style>
+    #harita {
+        width: 100%;
+        height: 400px;
+        background-color: #fc7f7f;
+    }
+
+    .check {
+        opacity: 0.5;
+        color: #996;
+    }
+</style>
