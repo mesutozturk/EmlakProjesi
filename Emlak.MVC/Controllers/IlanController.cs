@@ -138,6 +138,42 @@ namespace Emlak.MVC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize]
+        public ActionResult IlanListele()
+        {
+            var userManager = MembershipTools.NewUserManager();
 
+            var user = userManager.FindById(HttpContext.User.Identity.GetUserId());
+            List<KonutViewModel> model = new KonutRepo().GetAll().Where(x => x.KullaniciID == user.Id).Select(x => new KonutViewModel()
+            {
+                Aciklama = x.Aciklama,
+                YayindaMi = x.YayindaMi,
+                Adres = x.Adres,
+                Baslik = x.Baslik,
+                BinaYasi = x.BinaYasi,
+                Boylam = x.Boylam,
+                EklenmeTarihi = x.EklenmeTarihi,
+                Enlem = x.Enlem,
+                Fiyat = x.Fiyat,
+                FotografYollari = (x.Fotograflar.Count > 0 ? x.Fotograflar.Select(y => y.Yol).ToList() : new List<string>()),
+                ID = x.ID,
+                IlanTuruID = x.IlanTuruID,
+                IsitmaTuruID = x.IsitmaSistemiID,
+                KatTuruID = x.KatturID,
+                KullaniciID = x.KullaniciID,
+                Metrekare = x.Metrekare,
+                OdaSayisi = x.OdaSayisi,
+                OnaylanmaTarihi = x.OnaylanmaTarihi
+            }).ToList();
+
+            return View(model);
+        }
+
+        [Authorize]
+        public ActionResult IlanDetay(int? id)
+        {
+
+            return View();
+        }
     }
 }

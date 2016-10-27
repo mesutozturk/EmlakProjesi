@@ -1,0 +1,83 @@
+﻿@model List<KonutViewModel>
+@{
+    ViewBag.Title = "İlanlarım";
+    Layout = "~/Views/Shared/_mainLayout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3>İlan Listesi</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="dataTable_wrapper">
+                        <table class="table table-striped table-bordered table-hover" id="ilanTable">
+                            <thead>
+                                <tr>
+                                    <th>Foto</th>
+                                    <th>Başlık</th>
+                                    <th>Eklenme Tarihi</th>
+                                    <th>Onay</th>
+                                    <th>Fiyat</th>
+                                    <th>Yönet</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.Count; i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            @{
+                                                string foto = @"img/nofoto.jpg";
+                                                if (Model[i].FotografYollari.Count > 0)
+                                                {
+                                                    foto = Model[i].FotografYollari.First();
+                                                }
+                                            }
+                                            <img src="../@foto" alt="Alternate Text" class="img-responsive img-rounded" width="100" height="75" />
+                                        </td>
+                                        <td>@Model[i].Baslik</td>
+                                        <td>@($"{Model[i].EklenmeTarihi:dd-MMMM-yy}")</td>
+                                        <td class="@(Model[i].YayindaMi?"success":"danger")">
+                                            @(Model[i].YayindaMi ? "Yayında" : "Yayında Değil" )
+                                        </td>
+                                        <td>
+                                            @($"{Model[i].Fiyat:c2}")
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("IlanDetay","Ilan",new { id=Model[i].ID})" class="btn btn-info btn-block" role="button">Yönet</a>
+                                        </td>
+                                    </tr>
+                                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs/jq-2.2.3/dt-1.10.12/af-2.1.2/b-1.2.2/b-colvis-1.2.2/b-html5-1.2.2/b-print-1.2.2/cr-1.3.2/fc-3.2.2/fh-3.1.2/r-2.1.0/rr-1.1.2/sc-1.4.2/se-1.2.0/datatables.js"></script>
+<script>
+    $("#ilanTable").DataTable({
+        responsive: true,
+        language: {
+            "lengthMenu": "Bir sayfada _MENU_ Kayıt Görüntüle",
+            "zeroRecords": "Aradığınız kriterde kayıt bulunamadı...",
+            "info": "Gösterilen Sayfa _PAGE_ / _PAGES_",
+            "infoEmpty": "Kayıt Bulunmamaktadır",
+            "infoFiltered": "(Toplam _MAX_ kayıt aranıyor)",
+            "search": "Arama",
+            "Previous": "Önceki",
+            "Next": "Sonraki",
+            "paginate": {
+                "first": "ilk",
+                "last": "son",
+                "next": "Sonraki",
+                "previous": "Önceki"
+            }
+        }
+    });
+</script>
