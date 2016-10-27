@@ -50,7 +50,7 @@ namespace Emlak.MVC.Controllers
             var sonuc = userManager.Create(user, model.Register.Password);
             if (sonuc.Succeeded)
             {
-                if (userManager.Users.ToList().Count == 0)
+                if (userManager.Users.ToList().Count == 1)
                 {
                     userManager.AddToRole(user.Id, "Admin");
                     await SiteSettings.SendMail(new MailModel()
