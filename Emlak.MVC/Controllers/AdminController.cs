@@ -15,7 +15,7 @@ namespace Emlak.MVC.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
-        // GET: Admin test
+        // GET: Admin
         //[AllowAnonymous]
         public ActionResult Index()
         {
