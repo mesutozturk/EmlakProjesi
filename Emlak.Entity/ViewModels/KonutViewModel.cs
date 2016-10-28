@@ -46,7 +46,9 @@ namespace Emlak.Entity.ViewModels
         
         [Display(Name = "Olumlu Mu")]
         public bool OlumluMu { get; set; }
-
+        public string Durum { get; set; }
+        public string Isitma { get; set; }
+        public string Kat { get; set; }
         public List<BilgilendirmeViewModel> Bilgilendirmeler { get; set; } = new List<BilgilendirmeViewModel>();
     }
 }

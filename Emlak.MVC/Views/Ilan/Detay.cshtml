@@ -1,8 +1,434 @@
-﻿@model KonutViewModel
+﻿@model DetayViewModel
 @{
     ViewBag.Title = "Detay";
     Layout = "~/Views/Shared/_mainLayout.cshtml";
 }
 
-<h2>@Model.Baslik</h2>
-
+<div class="container">
+    <div class="row">
+        <div class="property">
+            <h1 class="property__title">@Model.KonutModel.Baslik<span class="property__city">@Model.KonutModel.Adres</span></h1>
+            <div class="property__price"><strong>@($"{Model.KonutModel.Fiyat:c2}")</strong></div>
+            <div class="social social--properties"><span class="social__title">Share this:</span><a href="#" class="social__item"><i class="fa fa-facebook"></i></a><a href="#" class="social__item"><i class="fa fa-twitter"></i></a><a href="#" class="social__item"><i class="fa fa-google-plus"></i></a></div>
+            <div class="clearfix"></div>
+            <div class="property__slider">
+                <div class="property__ribon">@Model.KonutModel.Durum</div>
+                <div id="properties-banner" class="slider slider--small">
+                    <div class="slider__block js-slick-slider">
+                        @if (Model.KonutModel.FotografYollari.Count == 0)
+                        {
+                            <div class="slider__item">
+                                <div class="slider__img">
+                                    <img data-lazy="~/img/nofoto.jpg" src="~/img/nofoto.jpg" alt="">
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            foreach (var item in Model.KonutModel.FotografYollari)
+                            {
+                                <div class="slider__item">
+                                    <div class="slider__img">
+                                        <img data-lazy="~/@item" src="~/@item" alt="@Model.KonutModel.Baslik">
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="slider__controls">
+                        <button type="button" class="slider__control slider__control--prev js-slick-prev">
+                            <svg class="slider__control-icon">
+                                <use xlink:href="#icon-arrow-left"></use>
+                            </svg>
+                        </button><span class="slider__current js-slick-current">1 /</span><span class="slider__total js-slick-total">9</span>
+                        <button type="button" class="slider__control slider__control--next js-slick-next">
+                            <svg class="slider__control-icon">
+                                <use xlink:href="#icon-arrow-right"></use>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="property__info">
+                <div class="property__id"><span>Ilan ID :</span><strong> @Model.KonutModel.ID</strong></div>
+                <div class="property__type"><span>Ilan Türü:</span><strong>@Model.KonutModel.Durum</strong></div>
+            </div>
+            <div class="property__plan">
+                <dl class="property__plan-item">
+                    <dt class="property__plan-icon">
+                        <svg>
+                            <use xlink:href="#icon-area"></use>
+                        </svg>
+                    </dt>
+                    <dd class="property__plan-title">Metre Kare</dd>
+                    <dd class="property__plan-value">@Model.KonutModel.Metrekare m²</dd>
+                </dl>
+                <dl class="property__plan-item">
+                    <dt class="property__plan-icon property__plan-icon--window">
+                        <svg>
+                            <use xlink:href="#icon-window"></use>
+                        </svg>
+                    </dt>
+                    <dd class="property__plan-title">Bedrooms</dd>
+                    <dd class="property__plan-value">5</dd>
+                </dl>
+                <dl class="property__plan-item">
+                    <dt class="property__plan-icon property__plan-icon--bathrooms">
+                        <svg>
+                            <use xlink:href="#icon-bathrooms"></use>
+                        </svg>
+                    </dt>
+                    <dd class="property__plan-title">Bathrooms</dd>
+                    <dd class="property__plan-value">3</dd>
+                </dl>
+                <dl class="property__plan-item">
+                    <dt class="property__plan-icon">
+                        <svg>
+                            <use xlink:href="#icon-bedrooms"></use>
+                        </svg>
+                    </dt>
+                    <dd class="property__plan-title">Beds</dd>
+                    <dd class="property__plan-value">2</dd>
+                </dl>
+                <dl class="property__plan-item">
+                    <dt class="property__plan-icon property__plan-icon--garage">
+                        <svg>
+                            <use xlink:href="#icon-garage"></use>
+                        </svg>
+                    </dt>
+                    <dd class="property__plan-title">Garages</dd>
+                    <dd class="property__plan-value">0</dd>
+                </dl>
+            </div>
+            <div class="property__params">
+                <h4 class="property__subtitle">The space</h4>
+                <ul class="property__params-list">
+                    <li>Year Built:<strong>1971</strong></li>
+                    <li>Number of Parking Spaces:<strong>24</strong></li>
+                    <li>Garage Size In Square Feet:<strong>50</strong></li>
+                    <li>Basement:<strong>Full</strong></li>
+                    <li>External<strong>Construction: Terace</strong></li>
+                    <li>Roofing:<strong>New</strong></li>
+                    <li>Exterior Material:<strong>Brick</strong></li>
+                    <li>Structure Type:<strong>Mansion</strong></li>
+                    <li>Doors &amp; windows:<strong>Double Pane Windows, Skylights</strong></li>
+                    <li>Fireplace description:<strong> Brick</strong></li>
+                    <li>Fireplace fuel:<strong>Uses Both Gas &amp; Wood</strong></li>
+                    <li>Fireplace location:<strong>Living Room</strong></li>
+                    <li>Floors:<strong>Carpet - Partial, Ceramic Tile</strong></li>
+                    <li>Plumbing:<strong>Full Copper Plumbing/</strong></li>
+                    <li>Garage Size In Square Feet:<strong>500</strong></li>
+                    <li>Basement:<strong>Full</strong></li>
+                    <li>Available From:<strong>2013-05-29</strong></li>
+                    <li>MLS ID #:<strong>0</strong></li>
+                </ul>
+            </div>
+            <div class="property__params">
+                <h4 class="property__subtitle">Amenities</h4>
+                <ul class="property__params-list property__params-list--options">
+                    <li>Wireless Internet</li>
+                    <li>Kitchen</li>
+                    <li>Internet</li>
+                    <li>Air Conditioning</li>
+                    <li>Heating</li>
+                    <li>Smoking Allowed</li>
+                    <li>Wheelchair Accessible</li>
+                    <li>Washer</li>
+                    <li>Dryer</li>
+                    <li>TV</li>
+                    <li>Suitable for Events</li>
+                    <li>Smoking Allowed</li>
+                    <li>Wheelchair Accessible</li>
+                    <li>Elevator in Building</li>
+                    <li>Indoor Fireplace</li>
+                    <li>Buzzer/Wireless Intercom</li>
+                    <li>Doorman</li>
+                    <li>Pool</li>
+                    <li>Hot Tub</li>
+                    <li>Gym</li>
+                </ul>
+            </div>
+            <div class="property__description js-unhide-block">
+                <h4 class="property__subtitle">Description</h4>
+                <div class="property__description">
+                   @Html.Raw(Model.KonutModel.Aciklama)
+                </div>
+                <button type="button" class="property__btn-more js-unhide">More information ...</button>
+            </div>
+            <div class="property__files js-unhide-block">
+                <h4 class="property__subtitle">Property attachment:</h4><a href="#" class="property__files-item">
+                    <svg class="property__files-icon">
+                        <use xlink:href="#icon-doc"></use>
+                    </svg>Estate plan
+                </a><a href="#" class="property__files-item">
+                    <svg class="property__files-icon">
+                        <use xlink:href="#icon-doc"></use>
+                    </svg>Rules
+                </a><a href="#" class="property__files-item">
+                    <svg class="property__files-icon">
+                        <use xlink:href="#icon-doc"></use>
+                    </svg>Demo
+                </a>
+            </div>
+            <button type="button" class="property__files-show js-unhide">Show attachments</button>
+            <div class="property__map map map--properties">
+                <div class="map__buttons">
+                    <button type="button" class="map__change-map js-map-btn active">Property Map</button>
+                    <button type="button" class="map__change-panorama js-panorama-btn">Street view</button>
+                </div>
+                <div class="map__wrap">
+                    <div data-type="map" class="map__view js-map-canvas"></div>
+                    <div data-type="panorama" class="map__view map__view--panorama js-map-canvas"></div>
+                </div>
+            </div>
+        </div>
+        <!-- end of block .property-->
+        <div class="sidebar">
+            <div class="worker worker--sidebar-advanced worker--sidebar-property js-unhide-block">
+                <div data-animate-end="animate-end" class="worker__item vcard">
+                    <h3 class="worker__name fn">
+                        @Model.ProfilModel.Name @Model.ProfilModel.Surname
+                </h3>
+                    <div class="worker__post">@Model.ProfilModel.Username</div>
+                    <div class="worker__photo">
+                        <a href="agent_listing.html" class="item-photo item-photo--static">
+                            <img src="../@Model.ProfilModel.AvatarPath" alt="@Model.ProfilModel.Name @Model.ProfilModel.Surname" class="photo">
+                            <figure class="item-photo__hover"><span class="item-photo__more">View Details</span></figure>
+                        </a>
+                    </div>
+                    <div class="worker__intro">
+                        <button type="button" class="worker__show js-unhide">Contact agent</button>
+                        <div class="worker__listings"><i class="worker__favorites worker__favorites--highlight"></i> My Listings -<a href="agent_listing.html">12 property</a></div>
+                        <!-- end of block .worker__listings-->
+                        <div class="worker__intro-row">
+                            <div class="worker__intro-col">
+                                <div class="worker__contacts">
+                                    <div class="tel"><span class="type">Tel.</span><a href="tel:+44(0)2035102390" class="uri value">+44 (0) 20 3510 2390</a></div>
+                                    <div class="tel"><span class="type">Mob.</span><a href="tel:+44(0)30345207210" class="uri value">+44 (0) 303 4520 7210</a></div>
+                                    <div class="email"><span class="type">Email</span><a href="mailto:rs@realtyspace.com" class="uri value">rs@realtyspace.com</a></div>
+                                    <div class="skype"><span class="type">Skype</span><a href="skype:Walkenboy?call" class="uri value">Walkenboy</a></div>
+                                </div>
+                                <!-- end of block .worker__contacts-->
+                            </div>
+                            <div class="worker__intro-col">
+                                <div class="social social--worker"><a href="#" class="social__item"><i class="fa fa-facebook"></i></a><a href="#" class="social__item"><i class="fa fa-linkedin"></i></a><a href="#" class="social__item"><i class="fa fa-twitter"></i></a><a href="#" class="social__item"><i class="fa fa-google-plus"></i></a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="worker__descr">
+                        <p>I&apos;m an entrepreneur who loves to travel and splits time between New York and Los Angeles. Believer in the golden rule: Do unto others as you would have them do unto you. Favorite destinations include Cabo San Lucas, Costa Rica, Turks &amp; Caicos...sunny beaches are ideal vacation spots</p>
+                    </div>
+                    <!-- end of block .worker__descr-->
+                    <div class="clearfix"></div>
+</div>
+                <!-- end of block .worker__item-->
+                <div class="worker__form">
+                    <div class="form form--sidebar-workers">
+                        <form action="#" method="POST" class="form__wrap js-contact-form">
+                            <div class="form__row form-group">
+                                <label for="in-form-name" class="form__label control-label">Your Name</label>
+                                <input id="in-form-name" type="text" name="name" required class="form__in form__in--text form-control">
+                            </div>
+                            <div class="form__row form__row--tel form-group">
+                                <label for="in-form-phone" class="form__label control-label">Telephone</label>
+                                <input id="in-form-phone" type="text" name="phone" class="form__in form__in--text form-control">
+                            </div>
+                            <div class="form__row form__row--email form-group">
+                                <label for="in-form-email" class="form__label control-label">E-mail</label>
+                                <input id="in-form-email" type="email" name="email" required data-parsley-trigger="change" class="form__in form__in--text form-control">
+                            </div>
+                            <div class="form__row form-group">
+                                <label for="in-form-message" class="form__label control-label">Message</label>
+                                <textarea id="in-form-message" name="message" required data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-validation-threshold="10" data-parsley-minlength-message="You need to enter at least a 20 caracters long comment.." class="form__in form__in--textarea form-control"></textarea>
+                            </div>
+                            <div class="form__row">
+                                <button type="submit" class="form__submit">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- end of block form-->
+                </div>
+            </div>
+            <!-- BEGIN PROPERTIES-->
+            <div class="properties js-unhide-block properties--sidebar">
+                <button type="button" class="widget__show js-unhide">Show properties</button>
+                <div class="properties__header">
+                    <h3 class="properties__title">Popular estate</h3>
+                    <h4 class="properties__headline">Find your apartment or house on the exact key parameters.</h4>
+                </div>
+                <!-- end of block  .properties__header-->
+                <div class="properties__list">
+                    <div class="properties__item">
+                        <div class="properties__thumb">
+                            <a href="property_details.html" class="item-photo item-photo--static">
+                                <img src="assets/media-demo/properties/554x360/02.jpg" alt="">
+                                <figure class="item-photo__hover"><span class="item-photo__more">View Details</span></figure>
+                            </a>
+                        </div>
+                        <!-- end of block .properties__thumb-->
+                        <div class="properties__info">
+                            <a href="property_details.html" class="properties__address">649 West Adams Boulevard, Los Angeles, CA 90007, USA</a><span class="properties__price">$4,555<span class="properties__price-period">per month</span></span>
+                        </div>
+                        <!-- end of block .properties__info-->
+                    </div>
+                    <!-- end of block .properties__item-->
+                    <div class="properties__item">
+                        <div class="properties__thumb">
+                            <a href="property_details.html" class="item-photo item-photo--static">
+                                <img src="assets/media-demo/properties/554x360/03.jpg" alt="">
+                                <figure class="item-photo__hover"><span class="item-photo__more">View Details</span></figure>
+                            </a>
+                        </div>
+                        <!-- end of block .properties__thumb-->
+                        <div class="properties__info">
+                            <a href="property_details.html" class="properties__address">958 Dewey Avenue, Los Angeles, CA 90006, USA</a><span class="properties__price">$86,723</span>
+                        </div>
+                        <!-- end of block .properties__info-->
+                    </div>
+                    <!-- end of block .properties__item-->
+                    <div class="properties__item">
+                        <div class="properties__thumb">
+                            <a href="property_details.html" class="item-photo item-photo--static">
+                                <img src="assets/media-demo/properties/554x360/04.jpg" alt="">
+                                <figure class="item-photo__hover"><span class="item-photo__more">View Details</span></figure>
+                            </a>
+                        </div>
+                        <!-- end of block .properties__thumb-->
+                        <div class="properties__info">
+                            <a href="property_details.html" class="properties__address">1026 Ohio Avenue, Long Beach, CA 90804, USA</a><span class="properties__price">$511,789</span>
+                        </div>
+                        <!-- end of block .properties__info-->
+                    </div>
+                    <!-- end of block .properties__item-->
+                </div>
+                <!-- end of block  .properties__list-->
+            </div>
+            <!-- END PROPERTIES-->
+            <!-- BEGIN WORKER SIDEBAR-->
+            <section class="worker worker--sidebar js-unhide-block">
+                <button type="button" class="widget__show js-unhide">Show workers</button>
+                <header class="worker__header">
+                    <h3 class="worker__title">Our Agents</h3>
+                    <h4 class="worker__headline">Find your apartment or house on the exact key parameters.</h4>
+                </header>
+                <!-- end of block .worker__header-->
+                <div class="worker__list">
+                    <div data-animate-end="animate-end" class="worker__item vcard">
+                        <div class="worker__photo">
+                            <a href="agent_listing.html" class="item-photo item-photo--static">
+                                <img src="assets/media-demo/workers/worker-1.jpg" alt="Christopher Pakulla" class="photo">
+                                <figure class="item-photo__hover"><span class="item-photo__more">View</span></figure>
+                            </a>
+                        </div>
+                        <h3 class="worker__name fn">Christopher Pakulla</h3>
+                        <div class="worker__post">Realtor, West USA Realty</div><a href="tel:+44(0)2035102390" class="worker__tel uri">+44 (0) 20 3510 2390</a>
+                    </div>
+                    <!-- end of block .worker__item-->
+                    <div data-animate-end="animate-end" class="worker__item vcard">
+                        <div class="worker__photo">
+                            <a href="agent_listing.html" class="item-photo item-photo--static">
+                                <img src="assets/media-demo/workers/worker-2.jpg" alt="Lisa Wemert" class="photo">
+                                <figure class="item-photo__hover"><span class="item-photo__more">View</span></figure>
+                            </a>
+                        </div>
+                        <h3 class="worker__name fn">Lisa Wemert</h3>
+                        <div class="worker__post">Managing Broker/Partner, e-PRO</div><a href="tel:+44(0)203510567" class="worker__tel uri">+44 (0) 20 3510 567</a>
+                    </div>
+                    <!-- end of block .worker__item-->
+                    <div data-animate-end="animate-end" class="worker__item vcard">
+                        <div class="worker__photo">
+                            <a href="agent_listing.html" class="item-photo item-photo--static">
+                                <img src="assets/media-demo/workers/worker-3.jpg" alt="Mariusz Ciesla" class="photo">
+                                <figure class="item-photo__hover"><span class="item-photo__more">View</span></figure>
+                            </a>
+                        </div>
+                        <h3 class="worker__name fn">Mariusz Ciesla</h3>
+                        <div class="worker__post">Real Estate Professional</div><a href="tel:+44(0)203510334" class="worker__tel uri">+44 (0) 20 3510 334</a>
+                    </div>
+                    <!-- end of block .worker__item-->
+                </div>
+                <!-- end of block .worker__list-->
+            </section>
+            <!-- END WORKER SIDEBAR-->
+            <!-- BEGIN SECTION ARTICLE-->
+            <section class="article js-unhide-block article--sidebar">
+                <button type="button" class="widget__show js-unhide">Show articles</button>
+                <div class="article__header">
+                    <h3 class="article__title">News & Blog</h3>
+                    <h4 class="article__headline">Find your apartment or house on the exact key parameters.</h4>
+                </div>
+                <!-- end of block .article__header-->
+                <div class="article__list">
+                    <div class="article__item">
+                        <div class="article__details">
+                            <a href="blog_details.html" class="article__item-title">You've been approved for a rental home. Now what?</a>
+                            <time datetime="2009-08-29" class="article__time">Mon - 3 Sep - 3:17 PM</time>
+                            <div class="article__intro">
+                                <p>Congratulations! You've found the perfect rental property and your application has been approved. Now there's just a few things you'll need ...</p>
+                            </div><a href="blog_details.html" class="article__more">Read more</a>
+                        </div>
+                    </div>
+                    <!-- end of block .article__item-->
+                </div>
+                <!-- end of block .article__list-->
+            </section>
+            <!-- END SECTION ARTICLE-->
+        </div>
+        <div class="clearfix"></div>
+        <div class="container">
+            <div class="properties properties--similar js-unhide-block">
+                <button type="button" class="widget__show js-unhide">Show Similar properties</button>
+                <header class="properties__header">
+                    <h3 class="properties__title">Similar properties</h3>
+                </header>
+                <div class="properties__list">
+                    <div class="properties__item">
+                        <div class="properties__thumb">
+                            <a href="property_details.html" class="item-photo">
+                                <img src="assets/media-demo/properties/554x360/02.jpg" alt="">
+                                <figure class="item-photo__hover item-photo__hover--params"><span class="properties__param-type">Self Storage</span><span class="properties__param"><span class="properties__param-column"><span class="properties__param-label">Area:</span><span class="properties__param-value">371 m2</span></span><span class="properties__param-column"><span class="properties__param-label">Beds:</span><span class="properties__param-value">2</span></span><span class="properties__param-column"><span class="properties__param-label">Baths:</span><span class="properties__param-value">1</span></span></span></figure>
+                            </a><span class="properties__ribon">For rent</span>
+                        </div>
+                        <!-- end of block .properties__thumb-->
+                        <div class="properties__info">
+                            <a href="property_details.html" class="properties__address"><span class="properties__address-street">649 West Adams Boulevard</span><span class="properties__address-city">Los Angeles, CA 90007, USA</span></a><a href="property_details.html" class="properties__more">View details</a>
+                            <!-- end of block .properties__param--><span class="properties__price">$4,555<span class="properties__price-period">per month</span></span>
+                        </div>
+                        <!-- end of block .properties__info-->
+                    </div>
+                    <!-- end of block .properties__item-->
+                    <div class="properties__item">
+                        <div class="properties__thumb">
+                            <a href="property_details.html" class="item-photo">
+                                <img src="assets/media-demo/properties/554x360/03.jpg" alt="">
+                                <figure class="item-photo__hover item-photo__hover--params"><span class="properties__param-type">Mixed-Use</span><span class="properties__param"><span class="properties__param-column"><span class="properties__param-label">Area:</span><span class="properties__param-value">190 m2</span></span><span class="properties__param-column"><span class="properties__param-label">Beds:</span><span class="properties__param-value">2</span></span><span class="properties__param-column"><span class="properties__param-label">Baths:</span><span class="properties__param-value">1</span></span></span></figure>
+                            </a><span class="properties__ribon">For sale</span>
+                        </div>
+                        <!-- end of block .properties__thumb-->
+                        <div class="properties__info">
+                            <a href="property_details.html" class="properties__address"><span class="properties__address-street">958 Dewey Avenue</span><span class="properties__address-city">Los Angeles, CA 90006, USA</span></a><a href="property_details.html" class="properties__more">View details</a>
+                            <!-- end of block .properties__param--><span class="properties__price">$86,723</span>
+                        </div>
+                        <!-- end of block .properties__info-->
+                    </div>
+                    <!-- end of block .properties__item-->
+                    <div class="properties__item">
+                        <div class="properties__thumb">
+                            <a href="property_details.html" class="item-photo">
+                                <img src="assets/media-demo/properties/554x360/04.jpg" alt="">
+                                <figure class="item-photo__hover item-photo__hover--params"><span class="properties__param-type">Multifamily</span><span class="properties__param"><span class="properties__param-column"><span class="properties__param-label">Area:</span><span class="properties__param-value">526 m2</span></span><span class="properties__param-column"><span class="properties__param-label">Beds:</span><span class="properties__param-value">1</span></span><span class="properties__param-column"><span class="properties__param-label">Baths:</span><span class="properties__param-value">1</span></span></span></figure>
+                            </a><span class="properties__ribon">For sale</span>
+                        </div>
+                        <!-- end of block .properties__thumb-->
+                        <div class="properties__info">
+                            <a href="property_details.html" class="properties__address"><span class="properties__address-street">1026 Ohio Avenue</span><span class="properties__address-city">Long Beach, CA 90804, USA</span></a><a href="property_details.html" class="properties__more">View details</a>
+                            <!-- end of block .properties__param--><span class="properties__price">$511,789</span>
+                        </div>
+                        <!-- end of block .properties__info-->
+                    </div>
+                    <!-- end of block .properties__item-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

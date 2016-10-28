@@ -34,6 +34,22 @@ namespace Emlak.MVC.Controllers
             }).ToList();
             return View(model);
         }
+        [AllowAnonymous]
+        public ActionResult Kullanici(string id)
+        {
+            var model = new KonutRepo().GetAllActive().Where(x=>x.KullaniciID==id).Select(x => new IlanListeleViewModel()
+            {
+                Adres = x.Adres,
+                Fiyat = x.Fiyat,
+                IlanBaslik = x.Baslik,
+                IlanFotoPath = x.Fotograflar.Count > 0 ? x.Fotograflar.FirstOrDefault().Yol : "img/nofoto.jpg",
+                IlanDurum = x.IlanTuru.Ad,
+                KonutId = x.ID,
+                MetreKare = x.Metrekare,
+                OdaSayisi = x.OdaSayisi
+            }).ToList();
+            return View(model);
+        }
         [Authorize]
         public ActionResult Ekle()
         {
@@ -354,7 +370,7 @@ namespace Emlak.MVC.Controllers
             Konut konut = new KonutRepo().GetByID(id.Value);
             if (konut == null || konut.YayindaMi == false)
                 return RedirectToAction("index");
-            KonutViewModel model = new KonutViewModel()
+            KonutViewModel Konutmodel = new KonutViewModel()
             {
                 ID = konut.ID,
                 Aciklama = konut.Aciklama,
@@ -373,9 +389,20 @@ namespace Emlak.MVC.Controllers
                 Metrekare = konut.Metrekare,
                 OdaSayisi = konut.OdaSayisi,
                 OnaylanmaTarihi = konut.OnaylanmaTarihi,
-                YayindaMi = konut.YayindaMi
+                YayindaMi = konut.YayindaMi,
+                Durum = konut.IlanTuru.Ad,
+                Isitma = konut.IsitmaSistemi.Ad,
+                Kat = konut.Katturu.Tur
             };
-
+            ProfileViewModel profilModel = new ProfileViewModel()
+            {
+                Username = konut.Sahibi.UserName,
+                AvatarPath = konut.Sahibi.AvatarPath,
+                Email = konut.Sahibi.Email,
+                Name = konut.Sahibi.Name,
+                Surname = konut.Sahibi.Surname
+            };
+            DetayViewModel model = new DetayViewModel() { KonutModel = Konutmodel, ProfilModel = profilModel };
             return View(model);
         }
 
