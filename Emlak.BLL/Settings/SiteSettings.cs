@@ -50,6 +50,7 @@ namespace Emlak.BLL.Settings
             sonuc = sonuc.Replace(">", "");
             sonuc = sonuc.Replace("&", "");
             sonuc = sonuc.Replace("[", "");
+            sonuc = sonuc.Replace("!", "");
             sonuc = sonuc.Replace("]", "");
             sonuc = sonuc.Replace("ı", "i");
             sonuc = sonuc.Replace("ö", "o");

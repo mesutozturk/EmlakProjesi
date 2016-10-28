@@ -953,6 +953,7 @@
     <Content Include="Views\Ilan\IlanListele.cshtml" />
     <Content Include="Views\Ilan\IlanDetay.cshtml" />
     <Content Include="Views\Ilan\Index.cshtml" />
+    <Content Include="Views\Ilan\Detay.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

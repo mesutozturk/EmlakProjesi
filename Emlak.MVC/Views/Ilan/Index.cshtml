@@ -1,4 +1,5 @@
-﻿@model List<IlanListeleViewModel>
+﻿@using Emlak.BLL.Settings;
+@model List<IlanListeleViewModel>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_mainLayout.cshtml";
@@ -62,7 +63,7 @@
                         {
                             <div class="properties__item">
                                 <div class="properties__thumb">
-                                    <a href="@Url.Action("Detay","Ilan",new { id=item.KonutId})" class="item-photo">
+                                    <a href="@Url.Action("Detay", "Ilan", new { id = item.KonutId, durum = SiteSettings.UrlFormatConverter(item.IlanDurum.ToLower()), baslik = SiteSettings.UrlFormatConverter(item.IlanBaslik.ToLower()) })" class="item-photo">
                                         <img src="../@item.IlanFotoPath" alt="Real Emlak - @item.IlanBaslik">
                                         <figure class="item-photo__hover item-photo__hover--params">
                                             <span class="properties__param">
@@ -80,11 +81,11 @@
                                 </div>
                                 <!-- end of block .properties__thumb-->
                                 <div class="properties__info">
-                                    <a href="property_details.html" class="properties__address">
+                                    <a href="@Url.Action("Detay", "Ilan", new { id = item.KonutId, durum = SiteSettings.UrlFormatConverter(item.IlanDurum.ToLower()), baslik = SiteSettings.UrlFormatConverter(item.IlanBaslik.ToLower()) })" class="properties__address">
                                         <span class="properties__address-street">@item.IlanBaslik</span>
                                         <span class="properties__address-city">@item.Adres</span>
                                     </a>
-                                    <a href="@Url.Action("Detay","Ilan",new { id=item.KonutId})" class="properties__more">
+                                    <a href="@Url.Action("Detay", "Ilan", new { id = item.KonutId, durum = SiteSettings.UrlFormatConverter(item.IlanDurum.ToLower()), baslik = SiteSettings.UrlFormatConverter(item.IlanBaslik.ToLower()) })" class="properties__more">
                                         İlan Detaylarını Gör
                                     </a>
                                     <!-- end of block .properties__param-->

@@ -18,6 +18,7 @@ namespace Emlak.MVC.Controllers
     public class IlanController : Controller
     {
         // GET: Ilan
+        [AllowAnonymous]
         public ActionResult Index()
         {
             var model = new KonutRepo().GetAllActive().Select(x => new IlanListeleViewModel()
@@ -343,7 +344,40 @@ namespace Emlak.MVC.Controllers
             return RedirectToAction("IlanDetay", new { id = konut.ID });
         }
 
+        [AllowAnonymous]
+        [Route("~/{durum}-Daire/{baslik}/{id?}")]
+        public ActionResult Detay(int? id, string baslik, string durum)
+        {
+            if (id == null)
+                return RedirectToAction("index");
 
+            Konut konut = new KonutRepo().GetByID(id.Value);
+            if (konut == null || konut.YayindaMi == false)
+                return RedirectToAction("index");
+            KonutViewModel model = new KonutViewModel()
+            {
+                ID = konut.ID,
+                Aciklama = konut.Aciklama,
+                Adres = konut.Adres,
+                Baslik = konut.Baslik,
+                BinaYasi = konut.BinaYasi,
+                Boylam = konut.Boylam,
+                EklenmeTarihi = konut.EklenmeTarihi,
+                Enlem = konut.Enlem,
+                Fiyat = konut.Fiyat,
+                FotografYollari = konut.Fotograflar.Count > 0 ? konut.Fotograflar.Select(x => x.Yol).ToList() : new List<string>(),
+                IlanTuruID = konut.IlanTuruID,
+                IsitmaTuruID = konut.IsitmaSistemiID,
+                KatTuruID = konut.KatturID,
+                KullaniciID = konut.KullaniciID,
+                Metrekare = konut.Metrekare,
+                OdaSayisi = konut.OdaSayisi,
+                OnaylanmaTarihi = konut.OnaylanmaTarihi,
+                YayindaMi = konut.YayindaMi
+            };
+
+            return View(model);
+        }
 
         [HttpPost]
         public JsonResult Resimsil(List<string> values)
