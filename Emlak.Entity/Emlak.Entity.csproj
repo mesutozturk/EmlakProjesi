@@ -96,6 +96,7 @@
     <Compile Include="IdentityModels\ApplicationUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\BilgilendirmeViewModel.cs" />
+    <Compile Include="ViewModels\IlanListeleViewModel.cs" />
     <Compile Include="ViewModels\KonutViewModel.cs" />
     <Compile Include="ViewModels\LoginAndRegisterViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />

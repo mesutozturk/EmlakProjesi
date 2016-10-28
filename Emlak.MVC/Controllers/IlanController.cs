@@ -20,7 +20,18 @@ namespace Emlak.MVC.Controllers
         // GET: Ilan
         public ActionResult Index()
         {
-            return View();
+            var model = new KonutRepo().GetAllActive().Select(x => new IlanListeleViewModel()
+            {
+                Adres = x.Adres,
+                Fiyat = x.Fiyat,
+                IlanBaslik = x.Baslik,
+                IlanFotoPath = x.Fotograflar.Count > 0 ? x.Fotograflar.FirstOrDefault().Yol : "img/nofoto.jpg",
+                IlanDurum = x.IlanTuru.Ad,
+                KonutId = x.ID,
+                MetreKare = x.Metrekare,
+                OdaSayisi = x.OdaSayisi
+            }).ToList();
+            return View(model);
         }
         [Authorize]
         public ActionResult Ekle()
@@ -180,7 +191,7 @@ namespace Emlak.MVC.Controllers
             bool userMi = userManager.IsInRole(user.Id, "User");
             bool adminMi = userManager.IsInRole(user.Id, "Admin");
 
-            if(!(userMi || adminMi))
+            if (!(userMi || adminMi))
             {
                 ModelState.AddModelError(string.Empty, "Sadece Aktif Kullanıcılar ilanlarını yönetebilirler");
                 return RedirectToAction("Profile", "Account");
@@ -254,7 +265,7 @@ namespace Emlak.MVC.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return RedirectToAction("IlanDetay",new { id = model.ID });
+                return RedirectToAction("IlanDetay", new { id = model.ID });
             }
 
             var konut = new KonutRepo().GetByID(model.ID);
