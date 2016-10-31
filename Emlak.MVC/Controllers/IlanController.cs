@@ -17,10 +17,12 @@ namespace Emlak.MVC.Controllers
 {
     public class IlanController : Controller
     {
+        const int sayfadaGosterilecekIlanSayisi = 9;
         // GET: Ilan
         [AllowAnonymous]
-        public ActionResult Index()
+        public ActionResult Index(int? sayfa)
         {
+            
             var model = new KonutRepo().GetAllActive().Select(x => new IlanListeleViewModel()
             {
                 Adres = x.Adres,
@@ -32,7 +34,22 @@ namespace Emlak.MVC.Controllers
                 MetreKare = x.Metrekare,
                 OdaSayisi = x.OdaSayisi
             }).ToList();
-            return View(model);
+            int toplamKayit = model.Count;
+            int sayfaSayisi = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(toplamKayit) / sayfadaGosterilecekIlanSayisi));
+            ViewBag.MaxSayfaSayisi = sayfaSayisi;
+            ViewBag.BulunduguSayfa = 1;
+            if (sayfa == null)
+                return View(model.Take(sayfadaGosterilecekIlanSayisi).ToList());
+            else
+            {
+                if (sayfa.Value > sayfaSayisi)
+                {
+                    ViewBag.BulunduguSayfa = sayfaSayisi;
+                    return View(model.Skip((sayfaSayisi - 1) * sayfadaGosterilecekIlanSayisi).Take(sayfadaGosterilecekIlanSayisi).ToList());
+                }
+                ViewBag.BulunduguSayfa = sayfa.Value;
+               return View(model.Skip((sayfa.Value - 1) * sayfadaGosterilecekIlanSayisi).Take(sayfadaGosterilecekIlanSayisi).ToList());
+            }
         }
         [AllowAnonymous]
         public ActionResult Kullanici(string id)
