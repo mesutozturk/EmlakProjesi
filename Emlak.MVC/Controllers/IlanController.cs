@@ -133,7 +133,7 @@ namespace Emlak.MVC.Controllers
                         file.SaveAs(dosyayolu);
                         WebImage img = new WebImage(dosyayolu);
                         img.Resize(870, 480, false);
-                        img.AddTextWatermark("Wissen", "RoyalBlue", opacity: 75, fontSize: 25, fontFamily: "Verdana");
+                        img.AddTextWatermark("Wissen", "RoyalBlue", opacity: 75, fontSize: 25, fontFamily: "Verdana",horizontalAlign:"Left");
                         img.Save(dosyayolu);
                         new FotografRepo().Insert(new Fotograf()
                         {

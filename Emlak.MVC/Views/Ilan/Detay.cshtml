@@ -471,6 +471,8 @@
                 }
             });
         googleHarita.setStreetView(panorama);
+        var transitLayer = new google.maps.TransitLayer();
+        transitLayer.setMap(googleHarita);
     }
     $(document).ready(function () {
         koordinat();
