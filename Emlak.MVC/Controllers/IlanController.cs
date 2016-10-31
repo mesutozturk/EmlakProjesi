@@ -37,6 +37,9 @@ namespace Emlak.MVC.Controllers
         [AllowAnonymous]
         public ActionResult Kullanici(string id)
         {
+            if (string.IsNullOrEmpty(id))
+                return RedirectToAction("Index");
+            ViewBag.kullaniciAdi = MembershipTools.NewUserManager().FindById(id).UserName;
             var model = new KonutRepo().GetAllActive().Where(x=>x.KullaniciID==id).Select(x => new IlanListeleViewModel()
             {
                 Adres = x.Adres,

@@ -10,7 +10,7 @@
         <!-- BEGIN LISTING-->
         <div class="listing listing--properties-list">
             <header class="listing__header">
-                <h1 class="listing__title">Listing estate</h1>
+                <h1 class="listing__title">@ViewBag.kullaniciAdi kullanıcısının ilanları</h1>
                 <h5 class="listing__headline">İlanlar:<strong> @Model.Count</strong> adet</h5>
             </header>
             <div class="listing__offset"></div>
@@ -64,7 +64,7 @@
                             <div class="properties__item">
                                 <div class="properties__thumb">
                                     <a href="@Url.Action("Detay", "Ilan", new { id = item.KonutId, durum = SiteSettings.UrlFormatConverter(item.IlanDurum.ToLower()), baslik = SiteSettings.UrlFormatConverter(item.IlanBaslik.ToLower()) })" class="item-photo">
-                                        <img src="../@item.IlanFotoPath" alt="Real Emlak - @item.IlanBaslik">
+                                        <img src="../../@item.IlanFotoPath" alt="Real Emlak - @item.IlanBaslik">
                                         <figure class="item-photo__hover item-photo__hover--params">
                                             <span class="properties__param">
                                                 <span class="properties__param-column">
@@ -455,7 +455,7 @@
                     <div class="properties__item">
                         <div class="properties__thumb">
                             <a href="property_details.html" class="item-photo item-photo--static">
-                                <img src="assets/media-demo/properties/554x360/02.jpg" alt="">
+                                <img src="../../assets/media-demo/properties/554x360/02.jpg" alt="">
                                 <figure class="item-photo__hover"><span class="item-photo__more">View Details</span></figure>
                             </a>
                         </div>
@@ -469,7 +469,7 @@
                     <div class="properties__item">
                         <div class="properties__thumb">
                             <a href="property_details.html" class="item-photo item-photo--static">
-                                <img src="assets/media-demo/properties/554x360/03.jpg" alt="">
+                                <img src="../../assets/media-demo/properties/554x360/03.jpg" alt="">
                                 <figure class="item-photo__hover"><span class="item-photo__more">View Details</span></figure>
                             </a>
                         </div>
@@ -483,7 +483,7 @@
                     <div class="properties__item">
                         <div class="properties__thumb">
                             <a href="property_details.html" class="item-photo item-photo--static">
-                                <img src="assets/media-demo/properties/554x360/04.jpg" alt="">
+                                <img src="../../assets/media-demo/properties/554x360/04.jpg" alt="">
                                 <figure class="item-photo__hover"><span class="item-photo__more">View Details</span></figure>
                             </a>
                         </div>
@@ -510,7 +510,7 @@
                     <div data-animate-end="animate-end" class="worker__item vcard">
                         <div class="worker__photo">
                             <a href="agent_listing.html" class="item-photo item-photo--static">
-                                <img src="assets/media-demo/workers/worker-1.jpg" alt="Christopher Pakulla" class="photo">
+                                <img src="../../assets/media-demo/workers/worker-1.jpg" alt="Christopher Pakulla" class="photo">
                                 <figure class="item-photo__hover"><span class="item-photo__more">View</span></figure>
                             </a>
                         </div>
@@ -521,7 +521,7 @@
                     <div data-animate-end="animate-end" class="worker__item vcard">
                         <div class="worker__photo">
                             <a href="agent_listing.html" class="item-photo item-photo--static">
-                                <img src="assets/media-demo/workers/worker-2.jpg" alt="Lisa Wemert" class="photo">
+                                <img src="../../assets/media-demo/workers/worker-2.jpg" alt="Lisa Wemert" class="photo">
                                 <figure class="item-photo__hover"><span class="item-photo__more">View</span></figure>
                             </a>
                         </div>
@@ -532,7 +532,7 @@
                     <div data-animate-end="animate-end" class="worker__item vcard">
                         <div class="worker__photo">
                             <a href="agent_listing.html" class="item-photo item-photo--static">
-                                <img src="assets/media-demo/workers/worker-3.jpg" alt="Mariusz Ciesla" class="photo">
+                                <img src="../../assets/media-demo/workers/worker-3.jpg" alt="Mariusz Ciesla" class="photo">
                                 <figure class="item-photo__hover"><span class="item-photo__more">View</span></figure>
                             </a>
                         </div>
