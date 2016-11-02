@@ -10,7 +10,7 @@
         <!-- BEGIN LISTING-->
         <div class="listing listing--properties-list">
             <header class="listing__header">
-                <h1 class="listing__title">Listing estate</h1>
+                <h1 class="listing__title">İlanlar</h1>
                 <h5 class="listing__headline">İlanlar:<strong> @Model.Count</strong> adet</h5>
             </header>
             <div class="listing__offset"></div>
@@ -112,15 +112,48 @@
                 <!-- BEGIN PAGINATION-->
                 <nav class="listing__pagination">
                     <ul class="pagination-custom">
-                        <li><a href="#"><span aria-hidden="true" class="glyphicon glyphicon-chevron-left"></span><span class="sr-only">Previous</span></a></li>
-                        <li><a href="#">1</a></li>
-                        <li><span>...</span></li>
-                        <li class="active-before"><a href="#">3</a></li>
-                        <li class="active"><span>4</span></li>
-                        <li class="active-after"><a href="#">5</a></li>
-                        <li><span>...</span></li>
-                        <li><a href="#">15</a></li>
-                        <li><a href="#"><span aria-hidden="true" class="glyphicon glyphicon-chevron-right"></span><span class="sr-only">Next</span></a></li>
+                        <li id="enilk">
+                            <a>
+                                <span aria-hidden="true" class="glyphicon glyphicon-chevron-left"></span>
+                                <span aria-hidden="true" class="glyphicon glyphicon-chevron-left"></span>
+                                <span class="sr-only">ilk</span>
+                            </a>
+                        </li>
+                        <li id="ilk">
+                            <a>
+                                <span aria-hidden="true" class="glyphicon glyphicon-chevron-left"></span>
+                                <span class="sr-only">önceki</span>
+                            </a>
+                        </li>
+                        @for (int i = 1; i <= Convert.ToInt32(ViewBag.MaxSayfaSayisi); i++)
+                        {
+                            @*<li>
+                                    <a href="#">1</a>
+                                </li>
+                                <li><span>...</span></li>
+                                <li class="active-before"><a href="#">3</a></li>
+                                <li class="active"><span>4</span></li>
+                                <li class="active-after"><a href="#">5</a></li>
+                                <li><span>...</span></li>
+                                <li><a href="#">15</a></li>*@
+                            <li id="@i">
+                                <a href="@Url.Action("Index","Ilan",new { sayfa=i })">@i</a>
+                            </li>
+                        }
+
+                        <li id="son">
+                            <a>
+                                <span aria-hidden="true" class="glyphicon glyphicon-chevron-right"></span>
+                                <span class="sr-only">sonraki</span>
+                            </a>
+                        </li>
+                        <li id="enson">
+                            <a>
+                                <span aria-hidden="true" class="glyphicon glyphicon-chevron-right"></span>
+                                <span aria-hidden="true" class="glyphicon glyphicon-chevron-right"></span>
+                                <span class="sr-only">sonuncu</span>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <!-- END PAGINATION-->
@@ -572,3 +605,42 @@
         <div class="clearfix"></div>
     </div>
 </div>
+<script src="~/Scripts/jquery-3.1.1.js"></script>
+<script>
+    var sayfa=@ViewBag.BulunduguSayfa;
+    var maxsayfa=@ViewBag.MaxSayfaSayisi;
+    var aktifSayfa=document.getElementById(sayfa);
+    $(aktifSayfa).addClass("active");
+    if(sayfa==1){
+        $("#ilk").addClass("disabled");
+        $("#enilk").addClass("disabled");
+    }
+    if(sayfa==maxsayfa){
+        $("#son").addClass("disabled");
+        $("#enson").addClass("disabled");
+    }
+    $("#ilk").click(function () {
+        if(sayfa!=1){
+            window.location.href='@Url.Action("Index","Ilan",new {sayfa= ViewBag.BulunduguSayfa-1 })';
+        }
+    });
+    $("#son").click(function () {
+        if(sayfa!=maxsayfa){
+            window.location.href='@Url.Action("Index","Ilan",new {sayfa= ViewBag.BulunduguSayfa+1 })';
+        }
+    });
+    $(".pagination-custom > li").click(function (e) {
+        if(this.id==sayfa)
+            e.preventDefault();
+    });
+    $("#enilk").click(function (e) {
+        if(sayfa!=1){
+            window.location.href='@Url.Action("Index","Ilan")';
+        }
+    })
+    $("#enson").click(function (e) {
+        if(sayfa!=maxsayfa){
+            window.location.href='@Url.Action("Index","Ilan",new {sayfa= ViewBag.MaxSayfaSayisi })';
+        }
+    })
+</script>

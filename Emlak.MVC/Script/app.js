@@ -1,4 +1,6 @@
-﻿$('#avatar').change(function () {
+﻿/// <reference path="C:\Users\section-1\Source\Repos\EmlakProjesi\Emlak.MVC\Scripts/jquery-3.1.1.js" />
+
+$('#avatar').change(function () {
     //readURL(this);
     var data = new FormData();
     var file = $('#avatar').get(0).files;
@@ -35,3 +37,8 @@ function readURL(input) {
 }
 
 //$('#useravatar').dragncrop({ overlay: true, overflow: true });
+
+//initPropertyMapAndPanorama(containerMap, containerPanorama, property)
+
+
+
