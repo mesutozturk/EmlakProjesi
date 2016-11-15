@@ -86,6 +86,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiModels\JsonMessageViewModel.cs" />
     <Compile Include="Entities\Fotograf.cs" />
     <Compile Include="Entities\IlanBilgilendirme.cs" />
     <Compile Include="Entities\IlanTuru.cs" />

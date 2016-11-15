@@ -13,3 +13,5 @@ install-package Microsoft.Owin.Host.SystemWeb
 
 --Api için
 install-package Microsoft.AspNet.WebApi.Cors
+install-package Microsoft.Owin.Cors
+install-package Microsoft.AspNet.WebApi.Owin
