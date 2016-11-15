@@ -1,12 +1,15 @@
 --hepsine--
-Entityframework
-Microsoft.aspnet.Identity.core
-Microsoft.aspnet.Identity.EntityFramework
-Newtonsoft.Json
-Microsoft.aspnet.Identity.Owin
+install-package Entityframework
+install-package Microsoft.aspnet.Identity.core
+install-package Microsoft.aspnet.Identity.EntityFramework
+install-package Newtonsoft.Json
+install-package Microsoft.aspnet.Identity.Owin
 --sadece UI--
-Microsoft.Owin
-Microsoft.Owin.Security
-Microsoft.Owin.Security.Cookies
-Microsoft.Owin.Security.OAuth
-Microsoft.Owin.Host.SystemWeb
+install-package Microsoft.Owin
+install-package Microsoft.Owin.Security
+install-package Microsoft.Owin.Security.Cookies
+install-package Microsoft.Owin.Security.OAuth
+install-package Microsoft.Owin.Host.SystemWeb
+
+--Api için
+install-package Microsoft.AspNet.WebApi.Cors

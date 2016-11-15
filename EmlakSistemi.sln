@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		kurulacak.txt = kurulacak.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emlak.WebApi", "Emlak.WebApi\Emlak.WebApi.csproj", "{0BC68990-2F9F-4A08-AAA4-BD1EE8C75882}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{79A52669-8003-41CE-A60C-42A3CE3576AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79A52669-8003-41CE-A60C-42A3CE3576AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79A52669-8003-41CE-A60C-42A3CE3576AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BC68990-2F9F-4A08-AAA4-BD1EE8C75882}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BC68990-2F9F-4A08-AAA4-BD1EE8C75882}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BC68990-2F9F-4A08-AAA4-BD1EE8C75882}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BC68990-2F9F-4A08-AAA4-BD1EE8C75882}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
