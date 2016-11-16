@@ -98,5 +98,16 @@ namespace Emlak.WebApi.Controllers
                 };
             }
         }
+
+        public JsonMessageViewModel GetLoginData()
+        {
+            return null;
+        }
+        [Authorize(Roles ="Admin")]
+        [HttpGet]
+        public object Admin()
+        {
+            return null;
+        }
     }
 }
