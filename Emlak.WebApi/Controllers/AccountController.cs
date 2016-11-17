@@ -102,6 +102,7 @@ namespace Emlak.WebApi.Controllers
         public JsonMessageViewModel GetLoginData()
         {
             return null;
+            //test
         }
         [Authorize(Roles ="Admin")]
         [HttpGet]
