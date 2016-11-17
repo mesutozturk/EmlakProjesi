@@ -109,6 +109,7 @@ namespace Emlak.WebApi.Controllers
         public object Admin()
         {
             return null;
+            //test
         }
     }
 }
